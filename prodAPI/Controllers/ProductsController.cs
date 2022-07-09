@@ -12,7 +12,7 @@ namespace prodAPI.Controllers
         public ProductsController(ILogger<ProductsController> logger)
         {
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-            
+             
         }
 
         [HttpGet]

@@ -17,7 +17,7 @@ namespace productionAPI.Models
         }
 
         public virtual DbSet<EtapyDto> Etapies { get; set; } = null!;
-        public virtual DbSet<KontumDto> Konta { get; set; } = null!;
+        public virtual DbSet<KontumDto> Konties { get; set; } = null!;
         public virtual DbSet<MaszynyDto> Maszynies { get; set; } = null!;
         public virtual DbSet<PracownicyDto> Pracownicies { get; set; } = null!;
         public virtual DbSet<ProduktyDto> Produkties { get; set; } = null!;

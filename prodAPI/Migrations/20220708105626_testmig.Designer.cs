@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
-using productionAPI.Models;
+using prodAPI.Models;
 
 #nullable disable
 
@@ -24,7 +24,7 @@ namespace prodAPI.Migrations
 
             SqlServerModelBuilderExtensions.UseIdentityColumns(modelBuilder, 1L, 1);
 
-            modelBuilder.Entity("productionAPI.Models.EtapyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.EtapyDto", b =>
                 {
                     b.Property<int>("IdEtapu")
                         .HasColumnType("int")
@@ -58,7 +58,7 @@ namespace prodAPI.Migrations
                     b.ToTable("Etapy", (string)null);
                 });
 
-            modelBuilder.Entity("productionAPI.Models.KontumDto", b =>
+            modelBuilder.Entity("prodAPI.Models.KontumDto", b =>
                 {
                     b.Property<int>("IdKonta")
                         .HasColumnType("int")
@@ -94,7 +94,7 @@ namespace prodAPI.Migrations
                     b.ToTable("Konta");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.MaszynyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.MaszynyDto", b =>
                 {
                     b.Property<int>("IdMaszyny")
                         .HasColumnType("int")
@@ -132,7 +132,7 @@ namespace prodAPI.Migrations
                     b.ToTable("Maszyny", (string)null);
                 });
 
-            modelBuilder.Entity("productionAPI.Models.PracownicyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.PracownicyDto", b =>
                 {
                     b.Property<int>("IdPracownika")
                         .HasColumnType("int")
@@ -167,7 +167,7 @@ namespace prodAPI.Migrations
                     b.ToTable("Pracownicy", (string)null);
                 });
 
-            modelBuilder.Entity("productionAPI.Models.ProduktyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.ProduktyDto", b =>
                 {
                     b.Property<int>("IdProduktu")
                         .HasColumnType("int")
@@ -184,7 +184,7 @@ namespace prodAPI.Migrations
                     b.ToTable("Produkty", (string)null);
                 });
 
-            modelBuilder.Entity("productionAPI.Models.StatusDto", b =>
+            modelBuilder.Entity("prodAPI.Models.StatusDto", b =>
                 {
                     b.Property<int>("IdStatusu")
                         .HasColumnType("int")
@@ -234,7 +234,7 @@ namespace prodAPI.Migrations
                     b.ToTable("Status", (string)null);
                 });
 
-            modelBuilder.Entity("productionAPI.Models.ZleceniumDto", b =>
+            modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>
                 {
                     b.Property<int>("IdZlecenia")
                         .HasColumnType("int")
@@ -259,9 +259,9 @@ namespace prodAPI.Migrations
                     b.ToTable("Zlecenia");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.EtapyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.EtapyDto", b =>
                 {
-                    b.HasOne("productionAPI.Models.ProduktyDto", "IdProduktuNavigation")
+                    b.HasOne("prodAPI.Models.ProduktyDto", "IdProduktuNavigation")
                         .WithMany("Etapies")
                         .HasForeignKey("IdProduktu")
                         .IsRequired()
@@ -270,9 +270,9 @@ namespace prodAPI.Migrations
                     b.Navigation("IdProduktuNavigation");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.KontumDto", b =>
+            modelBuilder.Entity("prodAPI.Models.KontumDto", b =>
                 {
-                    b.HasOne("productionAPI.Models.PracownicyDto", "IdPracownikaNavigation")
+                    b.HasOne("prodAPI.Models.PracownicyDto", "IdPracownikaNavigation")
                         .WithMany("Konta")
                         .HasForeignKey("IdPracownika")
                         .IsRequired()
@@ -281,32 +281,32 @@ namespace prodAPI.Migrations
                     b.Navigation("IdPracownikaNavigation");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.StatusDto", b =>
+            modelBuilder.Entity("prodAPI.Models.StatusDto", b =>
                 {
-                    b.HasOne("productionAPI.Models.EtapyDto", "IdEtapuNavigation")
+                    b.HasOne("prodAPI.Models.EtapyDto", "IdEtapuNavigation")
                         .WithMany("Statuses")
                         .HasForeignKey("IdEtapu")
                         .IsRequired()
                         .HasConstraintName("FK_Status_Etapy");
 
-                    b.HasOne("productionAPI.Models.MaszynyDto", "IdMaszynyNavigation")
+                    b.HasOne("prodAPI.Models.MaszynyDto", "IdMaszynyNavigation")
                         .WithMany("Statuses")
                         .HasForeignKey("IdMaszyny")
                         .HasConstraintName("FK_Status_Maszyny");
 
-                    b.HasOne("productionAPI.Models.PracownicyDto", "IdPracownikaNavigation")
+                    b.HasOne("prodAPI.Models.PracownicyDto", "IdPracownikaNavigation")
                         .WithMany("Statuses")
                         .HasForeignKey("IdPracownika")
                         .IsRequired()
                         .HasConstraintName("FK_Status_Pracownicy");
 
-                    b.HasOne("productionAPI.Models.ProduktyDto", "IdProduktuNavigation")
+                    b.HasOne("prodAPI.Models.ProduktyDto", "IdProduktuNavigation")
                         .WithMany("Statuses")
                         .HasForeignKey("IdProduktu")
                         .IsRequired()
                         .HasConstraintName("FK_Status_Produkty");
 
-                    b.HasOne("productionAPI.Models.ZleceniumDto", "IdZleceniaNavigation")
+                    b.HasOne("prodAPI.Models.ZleceniumDto", "IdZleceniaNavigation")
                         .WithMany("Statuses")
                         .HasForeignKey("IdZlecenia")
                         .IsRequired()
@@ -323,9 +323,9 @@ namespace prodAPI.Migrations
                     b.Navigation("IdZleceniaNavigation");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.ZleceniumDto", b =>
+            modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>
                 {
-                    b.HasOne("productionAPI.Models.ProduktyDto", "IdProduktuNavigation")
+                    b.HasOne("prodAPI.Models.ProduktyDto", "IdProduktuNavigation")
                         .WithMany("Zlecenia")
                         .HasForeignKey("IdProduktu")
                         .HasConstraintName("FK_Zlecenia_Produkty");
@@ -333,24 +333,24 @@ namespace prodAPI.Migrations
                     b.Navigation("IdProduktuNavigation");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.EtapyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.EtapyDto", b =>
                 {
                     b.Navigation("Statuses");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.MaszynyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.MaszynyDto", b =>
                 {
                     b.Navigation("Statuses");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.PracownicyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.PracownicyDto", b =>
                 {
                     b.Navigation("Konta");
 
                     b.Navigation("Statuses");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.ProduktyDto", b =>
+            modelBuilder.Entity("prodAPI.Models.ProduktyDto", b =>
                 {
                     b.Navigation("Etapies");
 
@@ -359,7 +359,7 @@ namespace prodAPI.Migrations
                     b.Navigation("Zlecenia");
                 });
 
-            modelBuilder.Entity("productionAPI.Models.ZleceniumDto", b =>
+            modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>
                 {
                     b.Navigation("Statuses");
                 });

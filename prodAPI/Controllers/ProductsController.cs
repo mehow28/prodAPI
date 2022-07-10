@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
-using productionAPI.Models;
+using prodAPI.Models;
 
 namespace prodAPI.Controllers
 {

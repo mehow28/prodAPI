@@ -1,4 +1,4 @@
-namespace productionAPI.Models
+namespace prodAPI.Models
 {
     public class ErrorViewModel
     {

@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace prodAPI.Models
+namespace productionAPI.Models
 {
     public partial class production_dbContext : DbContext
     {
@@ -166,19 +166,6 @@ namespace prodAPI.Models
                     .HasMaxLength(50)
                     .HasColumnName("nazwa");
             });
-
-            modelBuilder.Entity<ProduktyDto>()
-                .HasData(
-                new ProduktyDto
-                {
-                    IdProduktu = 1,
-                    Nazwa = "Prod1"
-                },
-                new ProduktyDto
-                {
-                    IdProduktu = 2,
-                    Nazwa = "Prod2"
-                });
 
             modelBuilder.Entity<StatusDto>(entity =>
             {

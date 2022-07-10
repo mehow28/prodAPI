@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace productionAPI.Models
+namespace prodAPI.Models
 {
-    public partial class ProduktyUpdateDto
+    public partial class ProduktyCreationDto
     {
         [Required]
         [MaxLength(50)]

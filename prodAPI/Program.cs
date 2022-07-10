@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
-using productionAPI.Models;
+using prodAPI.Services;
+using prodAPI.Models;
 using Serilog;
 
 Log.Logger = new LoggerConfiguration()
@@ -14,8 +15,10 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+var connectionString = builder.Configuration.GetConnectionString("Conn2");
 builder.Services.AddDbContext<production_dbContext>(x => x.UseSqlServer(connectionString));
+
+builder.Services.AddScoped<IProductionRepository,ProductionRepository>();
 
 var app = builder.Build();
 
@@ -25,7 +28,6 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
-
 app.UseHttpsRedirection();
 
 app.UseRouting();

@@ -1,4 +1,4 @@
-﻿using productionAPI.Models;
+﻿using prodAPI.Models;
 
 namespace prodAPI
 {

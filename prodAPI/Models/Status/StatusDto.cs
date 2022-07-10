@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace productionAPI.Models
+namespace prodAPI.Models
 {
     public partial class StatusDto
     {

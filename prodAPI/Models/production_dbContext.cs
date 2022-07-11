@@ -42,7 +42,7 @@ namespace prodAPI.Models
                 entity.ToTable("Etapy");
 
                 entity.Property(e => e.IdEtapu)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_etapu");
 
                 entity.Property(e => e.Czas)
@@ -69,7 +69,7 @@ namespace prodAPI.Models
                 entity.HasKey(e => e.IdKonta);
 
                 entity.Property(e => e.IdKonta)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_konta");
 
                 entity.Property(e => e.Haslo)
@@ -101,7 +101,7 @@ namespace prodAPI.Models
                 entity.ToTable("Maszyny");
 
                 entity.Property(e => e.IdMaszyny)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_maszyny");
 
                 entity.Property(e => e.DataPrzegladu)
@@ -132,7 +132,7 @@ namespace prodAPI.Models
                 entity.ToTable("Pracownicy");
 
                 entity.Property(e => e.IdPracownika)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_pracownika");
 
                 entity.Property(e => e.Email)
@@ -159,7 +159,7 @@ namespace prodAPI.Models
                 entity.ToTable("Produkty");
 
                 entity.Property(e => e.IdProduktu)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_produktu");
 
                 entity.Property(e => e.Nazwa)
@@ -167,7 +167,7 @@ namespace prodAPI.Models
                     .HasColumnName("nazwa");
             });
 
-            modelBuilder.Entity<ProduktyDto>()
+            /*modelBuilder.Entity<ProduktyDto>()
                 .HasData(
                 new ProduktyDto
                 {
@@ -179,7 +179,7 @@ namespace prodAPI.Models
                     IdProduktu = 2,
                     Nazwa = "Prod2"
                 });
-
+*/
             modelBuilder.Entity<StatusDto>(entity =>
             {
                 entity.HasKey(e => e.IdStatusu)
@@ -188,7 +188,7 @@ namespace prodAPI.Models
                 entity.ToTable("Status");
 
                 entity.Property(e => e.IdStatusu)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_statusu");
 
                 entity.Property(e => e.CzasTrwania).HasColumnName("czas_trwania");
@@ -240,7 +240,7 @@ namespace prodAPI.Models
                 entity.HasKey(e => e.IdZlecenia);
 
                 entity.Property(e => e.IdZlecenia)
-                    .ValueGeneratedNever()
+                    .ValueGeneratedOnAdd()
                     .HasColumnName("id_zlecenia");
 
                 entity.Property(e => e.Data)

@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using prodAPI.Entities;
 using prodAPI.Models;
 
 namespace prodAPI.Services
 {
-    public class ProductionRepository : IProductionRepository
+    public class ProduktyRepository : IProduktyRepository
     {
         private production_dbContext _context;
 
-        public ProductionRepository(production_dbContext context)
+        public ProduktyRepository(production_dbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -17,17 +18,20 @@ namespace prodAPI.Services
         }
         public async Task<IEnumerable<ProduktyDto>> GetProduktyAsync()
         {
-            return await _context.Produkties.OrderBy(c=>c.Nazwa).ToListAsync();
+            return await _context.Produkties.ToListAsync();
         }
 
-        public async Task<EtapyDto?> GetEtapyAsync(int idEtapu)
+        public async Task AddProduktAsync(ProduktyDto produkt)
         {
-            return await _context.Etapies.Where(c=>c.IdEtapu == idEtapu).FirstOrDefaultAsync();
+            _context.Produkties.Add(produkt);
         }
-
-        public async Task<IEnumerable<EtapyDto>> GetEtapyAsync()
+        public async Task<bool> SaveChangesAsync()
         {
-            return await _context.Etapies.OrderBy(c => c.Nazwa).ToListAsync();
+            return (await _context.SaveChangesAsync() >= 0);
+        }
+        public void DeleteProdukt(ProduktyDto produkt)
+        {
+            _context.Produkties.Remove(produkt);
         }
 
 

@@ -1,13 +1,16 @@
 ﻿using prodAPI.Models;
 using Microsoft.EntityFrameworkCore;
-    
+using prodAPI.Entities;
+
 namespace prodAPI.Services
 {
-    public interface IProductionRepository
+    public interface IProduktyRepository
     {
-        Task<IEnumerable<EtapyDto>> GetEtapyAsync();
-        Task<EtapyDto?> GetEtapyAsync(int idEtapu);
         Task<IEnumerable<ProduktyDto>> GetProduktyAsync();
         Task<ProduktyDto?> GetProduktyAsync(int idProduktu);
+        Task AddProduktAsync(ProduktyDto produkt);
+
+        void DeleteProdukt(ProduktyDto produkt);
+        Task<bool> SaveChangesAsync();
     }
 }

@@ -1,6 +1,8 @@
-﻿using Microsoft.AspNetCore.JsonPatch;
+﻿using AutoMapper;
+using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using prodAPI.Models;
+using prodAPI.Services;
 
 namespace prodAPI.Controllers
 {
@@ -9,99 +11,88 @@ namespace prodAPI.Controllers
     public class ProductsController : Controller
     {
         private readonly ILogger<ProductsController> _logger;
-        public ProductsController(ILogger<ProductsController> logger)
+        private readonly IProduktyRepository _produktyRepository;
+        private readonly IMapper _mapper;
+        public ProductsController(IProduktyRepository productionRepository, ILogger<ProductsController> logger, IMapper mapper)
         {
+            _produktyRepository = productionRepository ?? throw new ArgumentNullException(nameof(productionRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
-             
+            _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
+       
 
         [HttpGet]
-        public ActionResult<IEnumerable<ProduktyDto>> GetProducts()
+        public async Task<ActionResult<IEnumerable<ProduktyDto>>> GetProdukty()
         {
-            var products = new List<ProduktyDto>(); ;
-            return Ok(ProduktyDataStore.Current.Produkty);
+            var products = await _produktyRepository.GetProduktyAsync();
+            return Ok(_mapper.Map<IEnumerable<ProduktyDto>>(products));
         }
-        [HttpGet("{id}", Name = "GetProduct")]
-        public ActionResult<ProduktyDto> GetProduct(int id)
-        {
-            var foundProduct = ProduktyDataStore.Current.Produkty
-                .FirstOrDefault(c => c.IdProduktu == id);
+        [HttpGet("{id}", Name = "GetProdukt")]
+        public async Task<ActionResult<ProduktyDto>> GetProdukty(int id)
+        { 
+            var foundProduct = await _produktyRepository.GetProduktyAsync(id);
             if (foundProduct == null)
-            {
-                _logger.LogInformation($"Produkt o id {id} nie został znaleziony.");
                 return NotFound();
-            }
             return Ok(foundProduct);
         }
         [HttpPost]
-        public ActionResult<ProduktyDto> CreateProduct(ProduktyCreationDto ProduktDto)
+        public async Task<ActionResult<ProduktyDto>> CreateProdukty(ProduktyCreationDto produkt)
         {
-            if (!ModelState.IsValid)
-                return BadRequest();
+            var newProdukt = _mapper.Map<ProduktyDto>(produkt);
+            await _produktyRepository.AddProduktAsync(newProdukt);
+            await _produktyRepository.SaveChangesAsync();
 
-            var maxIdProduktu = ProduktyDataStore.Current.Produkty
-                .Max(c=>c.IdProduktu);
-
-            var newProduct = new ProduktyDto()
-            {
-                IdProduktu = ++maxIdProduktu,
-                Nazwa = ProduktDto.Nazwa
-            };
-            ProduktyDataStore.Current.Produkty.Add(newProduct);
-            return CreatedAtRoute("GetProduct",
+            return CreatedAtRoute("GetProdukt",
                 new
                 {
-                    id = newProduct.IdProduktu
-                },newProduct); ;
+                    id = newProdukt.IdProduktu
+                },newProdukt); ;
         }
         [HttpPut("{id}")]
-        public ActionResult UpdateProduct(
+        public async Task<ActionResult>  UpdateProduct(
             int id, ProduktyUpdateDto produkt)
         {
-            var foundProduct = ProduktyDataStore.Current.Produkty
-                .FirstOrDefault(c => c.IdProduktu == id);
-            if (foundProduct == null)
+            var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
+            if (foundProdukt is null)
                 return NotFound();
-            foundProduct.Nazwa = produkt.Nazwa;
-
+            
+            _mapper.Map(produkt, foundProdukt);
+            await _produktyRepository.SaveChangesAsync();
+            
             return NoContent();
         }
         [HttpPatch("{id}")]
-        public ActionResult PatchProduct(
+        public async Task<ActionResult> PatchProduct(
             int id, JsonPatchDocument<ProduktyUpdateDto> patch)
         {
-            var foundProduct = ProduktyDataStore.Current.Produkty
-                .FirstOrDefault(c => c.IdProduktu == id);
-            if (foundProduct == null)
+            var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
+            if (foundProdukt is null)
                 return NotFound();
+            
+            var produktToPatch = _mapper.Map<ProduktyUpdateDto>(foundProdukt);
 
-            var productToPatch =
-                new ProduktyUpdateDto()
-                {
-                    Nazwa = foundProduct.Nazwa
-                };
-
-            patch.ApplyTo(productToPatch, ModelState);
+            patch.ApplyTo(produktToPatch, ModelState);
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-            if (!TryValidateModel(productToPatch))
+            if (!TryValidateModel(produktToPatch))
                 return BadRequest(ModelState);
 
-            foundProduct.Nazwa = productToPatch.Nazwa;
+            _mapper.Map(produktToPatch, foundProdukt);
+            await _produktyRepository.SaveChangesAsync();
 
             return NoContent();
 
         }
         [HttpDelete("{id}")]
-        public ActionResult DeleteProduct(int id)
+        public async Task<ActionResult> DeleteProduct(int id)
         {
-            var foundProduct = ProduktyDataStore.Current.Produkty
-                .FirstOrDefault(c => c.IdProduktu == id);
-            if (foundProduct == null)
+            var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
+            if (foundProdukt is null)
                 return NotFound();
 
-            ProduktyDataStore.Current.Produkty.Remove(foundProduct);
+            _produktyRepository.DeleteProdukt(foundProdukt);
+            await _produktyRepository.SaveChangesAsync();
             return NoContent();
         }
     }

@@ -18,7 +18,15 @@ builder.Services.AddSwaggerGen();
 var connectionString = builder.Configuration.GetConnectionString("Conn2");
 builder.Services.AddDbContext<production_dbContext>(x => x.UseSqlServer(connectionString));
 
-builder.Services.AddScoped<IProductionRepository,ProductionRepository>();
+builder.Services.AddScoped<IEtapyRepository, EtapyRepository>();
+builder.Services.AddScoped<IKontumRepository, KontumRepository>();
+builder.Services.AddScoped<IMaszynyRepository, MaszynyRepository>();
+builder.Services.AddScoped<IPracownicyRepository, PracownicyRepository>();
+builder.Services.AddScoped<IProduktyRepository,ProduktyRepository>();
+builder.Services.AddScoped<IStatusRepository, StatusRepository>();
+builder.Services.AddScoped<IZleceniumRepository, ZleceniumRepository>();
+
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
 var app = builder.Build();
 

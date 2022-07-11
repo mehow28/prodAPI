@@ -25,11 +25,8 @@ namespace prodAPI.Migrations
             modelBuilder.Entity("prodAPI.Models.EtapyDto", b =>
                 {
                     b.Property<int>("IdEtapu")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_etapu");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdEtapu"), 1L, 1);
 
                     b.Property<string>("Czas")
                         .IsRequired()
@@ -62,11 +59,8 @@ namespace prodAPI.Migrations
             modelBuilder.Entity("prodAPI.Models.KontumDto", b =>
                 {
                     b.Property<int>("IdKonta")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_konta");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdKonta"), 1L, 1);
 
                     b.Property<byte[]>("Haslo")
                         .IsRequired()
@@ -95,17 +89,14 @@ namespace prodAPI.Migrations
 
                     b.HasIndex("IdPracownika");
 
-                    b.ToTable("Konties");
+                    b.ToTable("Konties", (string)null);
                 });
 
             modelBuilder.Entity("prodAPI.Models.MaszynyDto", b =>
                 {
                     b.Property<int>("IdMaszyny")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_maszyny");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMaszyny"), 1L, 1);
 
                     b.Property<DateTime>("DataPrzegladu")
                         .HasColumnType("date")
@@ -142,11 +133,8 @@ namespace prodAPI.Migrations
             modelBuilder.Entity("prodAPI.Models.PracownicyDto", b =>
                 {
                     b.Property<int>("IdPracownika")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_pracownika");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdPracownika"), 1L, 1);
 
                     b.Property<string>("Email")
                         .IsRequired()
@@ -180,11 +168,8 @@ namespace prodAPI.Migrations
             modelBuilder.Entity("prodAPI.Models.ProduktyDto", b =>
                 {
                     b.Property<int>("IdProduktu")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_produktu");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdProduktu"), 1L, 1);
 
                     b.Property<string>("Nazwa")
                         .IsRequired()
@@ -195,16 +180,25 @@ namespace prodAPI.Migrations
                     b.HasKey("IdProduktu");
 
                     b.ToTable("Produkty", (string)null);
+
+                    b.HasData(
+                        new
+                        {
+                            IdProduktu = 1,
+                            Nazwa = "Prod1"
+                        },
+                        new
+                        {
+                            IdProduktu = 2,
+                            Nazwa = "Prod2"
+                        });
                 });
 
             modelBuilder.Entity("prodAPI.Models.StatusDto", b =>
                 {
                     b.Property<int>("IdStatusu")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_statusu");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStatusu"), 1L, 1);
 
                     b.Property<int>("CzasTrwania")
                         .HasColumnType("int")
@@ -253,11 +247,8 @@ namespace prodAPI.Migrations
             modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>
                 {
                     b.Property<int>("IdZlecenia")
-                        .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasColumnName("id_zlecenia");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdZlecenia"), 1L, 1);
 
                     b.Property<DateTime?>("Data")
                         .HasColumnType("date")
@@ -275,7 +266,7 @@ namespace prodAPI.Migrations
 
                     b.HasIndex("IdProduktu");
 
-                    b.ToTable("Zlecenia");
+                    b.ToTable("Zlecenia", (string)null);
                 });
 
             modelBuilder.Entity("prodAPI.Models.EtapyDto", b =>

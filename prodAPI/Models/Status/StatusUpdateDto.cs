@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace prodAPI.Models
 {
-    public partial class StatusCreationDto
+    public partial class StatusUpdateDto
     {
         [ForeignKey("IdProduktu")]
         public int IdProduktu { get; set; }

@@ -1,11 +1,15 @@
 ﻿using AutoMapper;
+using prodAPI.Models;
+
 namespace prodAPI.Profiles
 {
     public class EtapyProfile : Profile
     {
         public EtapyProfile()
-        {
-            CreateMap<Entities.Etapy, Models.EtapyDto>();
+        { 
+            CreateMap<EtapyCreationDto, EtapyDto>();
+            CreateMap<EtapyUpdateDto, EtapyDto>();
+            CreateMap<EtapyDto, EtapyUpdateDto>();
         }
     }
 }

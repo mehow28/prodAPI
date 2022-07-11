@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace prodAPI.Models
 {
-    public partial class ZleceniumCreationDto
+    public partial class ZleceniumUpdateDto
     {
         public DateTime? Data { get; set; }
         [ForeignKey("IdProduktu")]

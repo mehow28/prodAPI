@@ -21,17 +21,17 @@ namespace prodAPI.Services
             return await _context.Zlecenia.ToListAsync();
         }
 
-        public async Task AddZleceniumAsync(ZleceniumDto Zlecenium)
+        public async Task AddZleceniumAsync(ZleceniumDto zlecenium)
         {
-            _context.Zlecenia.Add(Zlecenium);
+            _context.Zlecenia.Add(zlecenium);
         }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
-        public void DeleteZlecenium(ZleceniumDto Zlecenium)
+        public void DeleteZlecenium(ZleceniumDto zlecenium)
         {
-            _context.Zlecenia.Remove(Zlecenium);
+            _context.Zlecenia.Remove(zlecenium);
         }
 
 

@@ -21,17 +21,17 @@ namespace prodAPI.Services
             return await _context.Maszynies.ToListAsync();
         }
 
-        public async Task AddMaszynaAsync(MaszynyDto Maszyn)
+        public async Task AddMaszynaAsync(MaszynyDto maszyna)
         {
-            _context.Maszynies.Add(Maszyn);
+            _context.Maszynies.Add(maszyna);
         }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
-        public void DeleteMaszyna(MaszynyDto Maszyn)
+        public void DeleteMaszyna(MaszynyDto maszyna)
         {
-            _context.Maszynies.Remove(Maszyn);
+            _context.Maszynies.Remove(maszyna);
         }
 
 

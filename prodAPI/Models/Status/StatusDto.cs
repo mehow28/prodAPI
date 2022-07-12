@@ -11,7 +11,7 @@ namespace prodAPI.Models
         public int? IdMaszyny { get; set; }
         public int IdPracownika { get; set; }
         public int IdEtapu { get; set; }
-        public bool Status1 { get; set; }
+        public bool Stan { get; set; }
         public int CzasTrwania { get; set; }
 
         public virtual EtapyDto IdEtapuNavigation { get; set; } = null!;

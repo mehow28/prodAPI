@@ -182,8 +182,7 @@ namespace prodAPI.Models
 */
             modelBuilder.Entity<StatusDto>(entity =>
             {
-                entity.HasKey(e => e.IdStatusu)
-                    .HasName("PK_Status_1");
+                entity.HasKey(e => e.IdStatusu);
 
                 entity.ToTable("Status");
 
@@ -203,7 +202,7 @@ namespace prodAPI.Models
 
                 entity.Property(e => e.IdZlecenia).HasColumnName("id_zlecenia");
 
-                entity.Property(e => e.Status1).HasColumnName("status");
+                entity.Property(e => e.Stan).HasColumnName("stan");
 
                 entity.HasOne(d => d.IdEtapuNavigation)
                     .WithMany(p => p.Statuses)

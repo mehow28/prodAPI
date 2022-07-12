@@ -7,13 +7,13 @@ using prodAPI.Services;
 namespace prodAPI.Controllers
 {
     [ApiController]
-    [Route("api/products")]
-    public class ProductsController : Controller
+    [Route("api/produkty")]
+    public class ProduktyController : Controller
     {
-        private readonly ILogger<ProductsController> _logger;
+        private readonly ILogger<ProduktyController> _logger;
         private readonly IProduktyRepository _produktyRepository;
         private readonly IMapper _mapper;
-        public ProductsController(IProduktyRepository productionRepository, ILogger<ProductsController> logger, IMapper mapper)
+        public ProduktyController(IProduktyRepository productionRepository, ILogger<ProduktyController> logger, IMapper mapper)
         {
             _produktyRepository = productionRepository ?? throw new ArgumentNullException(nameof(productionRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));

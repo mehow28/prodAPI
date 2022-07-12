@@ -21,5 +21,7 @@ namespace prodAPI.Models
 
         [ForeignKey("IdEtapu")]
         public int IdEtapu { get; set; }
+        public bool Stan { get; set; }
+        public int CzasTrwania { get; set; }
     }
 }

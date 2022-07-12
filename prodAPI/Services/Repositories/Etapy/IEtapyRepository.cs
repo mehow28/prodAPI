@@ -6,9 +6,9 @@ namespace prodAPI.Services
     {
         Task<IEnumerable<EtapyDto>> GetEtapyAsync();
         Task<EtapyDto?> GetEtapyAsync(int idEtapu);
-        Task AddEtapAsync(EtapyDto Etap);
+        Task AddEtapAsync(EtapyDto etap);
 
-        void DeleteEtap(EtapyDto Etap);
+        void DeleteEtap(EtapyDto etap);
         Task<bool> SaveChangesAsync();
     }
 }

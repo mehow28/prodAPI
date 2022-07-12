@@ -21,17 +21,17 @@ namespace prodAPI.Services
             return await _context.Etapies.OrderBy(c => c.IdEtapu).ToListAsync();
         }
 
-        public async Task AddEtapAsync(EtapyDto Etap)
+        public async Task AddEtapAsync(EtapyDto etap)
         {
-            _context.Etapies.Add(Etap);
+            _context.Etapies.Add(etap);
         }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
-        public void DeleteEtap(EtapyDto Etap)
+        public void DeleteEtap(EtapyDto etap)
         {
-            _context.Etapies.Remove(Etap);
+            _context.Etapies.Remove(etap);
         }
     }
 }

@@ -21,17 +21,17 @@ namespace prodAPI.Services
             return await _context.Statuses.ToListAsync();
         }
 
-        public async Task AddStatusAsync(StatusDto Status)
+        public async Task AddStatusAsync(StatusDto status)
         {
-            _context.Statuses.Add(Status);
+            _context.Statuses.Add(status);
         }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
-        public void DeleteStatus(StatusDto Status)
+        public void DeleteStatus(StatusDto status)
         {
-            _context.Statuses.Remove(Status);
+            _context.Statuses.Remove(status);
         }
 
 

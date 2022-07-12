@@ -230,12 +230,11 @@ namespace prodAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_zlecenia");
 
-                    b.Property<bool>("Status1")
+                    b.Property<bool>("Stan")
                         .HasColumnType("bit")
-                        .HasColumnName("status");
+                        .HasColumnName("stan");
 
-                    b.HasKey("IdStatusu")
-                        .HasName("PK_Status_1");
+                    b.HasKey("IdStatusu");
 
                     b.HasIndex("IdEtapu");
 

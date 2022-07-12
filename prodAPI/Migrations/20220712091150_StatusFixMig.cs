@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace prodAPI.Migrations
 {
-    public partial class DbBuildProperIdGeneration : Migration
+    public partial class StatusFixMig : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -128,12 +128,12 @@ namespace prodAPI.Migrations
                     id_maszyny = table.Column<int>(type: "int", nullable: true),
                     id_pracownika = table.Column<int>(type: "int", nullable: false),
                     id_etapu = table.Column<int>(type: "int", nullable: false),
-                    status = table.Column<bool>(type: "bit", nullable: false),
+                    stan = table.Column<bool>(type: "bit", nullable: false),
                     czas_trwania = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Status_1", x => x.id_statusu);
+                    table.PrimaryKey("PK_Status", x => x.id_statusu);
                     table.ForeignKey(
                         name: "FK_Status_Etapy",
                         column: x => x.id_etapu,

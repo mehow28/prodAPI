@@ -15,7 +15,7 @@ namespace prodAPI.Models
         [Required]
         [MaxLength(50)]
         public string Uprawnienia { get; set; } = null!;
-        [Required]
+       
         public int IdPracownika { get; set; }
     }
 }

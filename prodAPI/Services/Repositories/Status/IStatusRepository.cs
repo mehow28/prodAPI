@@ -8,9 +8,9 @@ namespace prodAPI.Services
     {
         Task<IEnumerable<StatusDto>> GetStatusAsync();
         Task<StatusDto?> GetStatusAsync(int idStatusu);
-        Task AddStatusAsync(StatusDto Status);
+        Task AddStatusAsync(StatusDto status);
 
-        void DeleteStatus(StatusDto Status);
+        void DeleteStatus(StatusDto status);
         Task<bool> SaveChangesAsync();
     }
 }

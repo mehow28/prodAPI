@@ -12,8 +12,8 @@ using prodAPI.Models;
 namespace prodAPI.Migrations
 {
     [DbContext(typeof(production_dbContext))]
-    [Migration("20220711103907_DbBuildProperIdGeneration")]
-    partial class DbBuildProperIdGeneration
+    [Migration("20220712091150_StatusFixMig")]
+    partial class StatusFixMig
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -232,12 +232,11 @@ namespace prodAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_zlecenia");
 
-                    b.Property<bool>("Status1")
+                    b.Property<bool>("Stan")
                         .HasColumnType("bit")
-                        .HasColumnName("status");
+                        .HasColumnName("stan");
 
-                    b.HasKey("IdStatusu")
-                        .HasName("PK_Status_1");
+                    b.HasKey("IdStatusu");
 
                     b.HasIndex("IdEtapu");
 

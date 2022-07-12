@@ -8,9 +8,9 @@ namespace prodAPI.Services
     {
         Task<IEnumerable<PracownicyDto>> GetPracownicyAsync();
         Task<PracownicyDto?> GetPracownicyAsync(int idPracowniku);
-        Task AddPracownikAsync(PracownicyDto Pracownik);
+        Task AddPracownikAsync(PracownicyDto pracownik);
 
-        void DeletePracownik(PracownicyDto Pracownik);
+        void DeletePracownik(PracownicyDto pracownik);
         Task<bool> SaveChangesAsync();
     }
 }

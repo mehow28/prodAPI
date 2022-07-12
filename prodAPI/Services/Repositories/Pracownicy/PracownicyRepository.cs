@@ -21,17 +21,17 @@ namespace prodAPI.Services
             return await _context.Pracownicies.ToListAsync();
         }
 
-        public async Task AddPracownikAsync(PracownicyDto Pracownic)
+        public async Task AddPracownikAsync(PracownicyDto pracownik)
         {
-            _context.Pracownicies.Add(Pracownic);
+            _context.Pracownicies.Add(pracownik);
         }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
-        public void DeletePracownik(PracownicyDto Pracownic)
+        public void DeletePracownik(PracownicyDto pracownik)
         {
-            _context.Pracownicies.Remove(Pracownic);
+            _context.Pracownicies.Remove(pracownik);
         }
 
 

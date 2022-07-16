@@ -14,7 +14,7 @@ namespace prodAPI.Controllers
         private readonly ILogger<ProduktyController> _logger;
         private readonly IProduktyRepository _produktyRepository;
         private readonly IMapper _mapper;
-        const int maxProduktyPageSize = 20;
+        const int maxPageSize = 20;
         public ProduktyController(IProduktyRepository productionRepository, ILogger<ProduktyController> logger, IMapper mapper)
         {
             _produktyRepository = productionRepository ?? throw new ArgumentNullException(nameof(productionRepository));
@@ -27,8 +27,8 @@ namespace prodAPI.Controllers
         public async Task<ActionResult<IEnumerable<ProduktyDto>>> GetProdukty(
             string? nazwa, string? searchQuery, int pageNumber = 1, int pageSize = 10)
         {
-            if (pageSize > maxProduktyPageSize)
-                pageSize = maxProduktyPageSize;
+            if (pageSize > maxPageSize)
+                pageSize = maxPageSize;
 
             var (products,paginationMetadata) = await _produktyRepository
                 .GetProduktyAsync(nazwa, searchQuery, pageNumber, pageSize);

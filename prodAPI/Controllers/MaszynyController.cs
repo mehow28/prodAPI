@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using prodAPI.Models;
 using prodAPI.Services;
+using System.Text.Json;
 
 namespace prodAPI.Controllers
 {
@@ -13,6 +14,7 @@ namespace prodAPI.Controllers
         private readonly ILogger<MaszynyController> _logger;
         private readonly IMaszynyRepository _maszynyRepository;
         private readonly IMapper _mapper;
+        const int maxPageSize = 20;
         public MaszynyController(IMaszynyRepository maszynyRepository, ILogger<MaszynyController> logger, IMapper mapper)
         {
             _maszynyRepository = maszynyRepository ?? throw new ArgumentNullException(nameof(maszynyRepository));
@@ -22,10 +24,20 @@ namespace prodAPI.Controllers
        
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<MaszynyDto>>> GetMaszyny()
+        public async Task<ActionResult<IEnumerable<MaszynyDto>>> GetMaszyny(
+            string? nazwa, string? marka, string? model, DateTime? dataPrzegladu,
+            string? searchQuery, int pageNumber, int pageSize)
         {
-            var products = await _maszynyRepository.GetMaszynyAsync();
-            return Ok(_mapper.Map<IEnumerable<MaszynyDto>>(products));
+            if (pageSize > maxPageSize)
+                pageSize = maxPageSize;
+
+            var (maszyny, paginationMetadata) = await _maszynyRepository
+                .GetMaszynyAsync(nazwa, marka, model, dataPrzegladu, 
+                searchQuery, pageNumber, pageSize);
+
+            Response.Headers.Add("X-Pagination",
+                JsonSerializer.Serialize(paginationMetadata));
+            return Ok(_mapper.Map<IEnumerable<MaszynyDto>>(maszyny));
         }
         [HttpGet("{id}", Name = "GetMaszyna")]
         public async Task<ActionResult<MaszynyDto>> GetMaszyny(int id)

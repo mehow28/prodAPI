@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using prodAPI.Models;
 using prodAPI.Services;
+using System.Text.Json;
 
 namespace prodAPI.Controllers
 {
@@ -13,6 +14,7 @@ namespace prodAPI.Controllers
         private readonly ILogger<ZleceniumController> _logger;
         private readonly IZleceniumRepository _zleceniumRepository;
         private readonly IMapper _mapper;
+        const int maxPageSize = 20;
         public ZleceniumController(IZleceniumRepository productionRepository, ILogger<ZleceniumController> logger, IMapper mapper)
         {
             _zleceniumRepository = productionRepository ?? throw new ArgumentNullException(nameof(productionRepository));
@@ -22,10 +24,19 @@ namespace prodAPI.Controllers
        
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ZleceniumDto>>> GetZlecenium()
+        public async Task<ActionResult<IEnumerable<ZleceniumDto>>> GetZlecenium(
+            DateTime? data, int? idProduktu,
+            int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _zleceniumRepository.GetZleceniumAsync();
-            return Ok(_mapper.Map<IEnumerable<ZleceniumDto>>(products));
+            if (pageSize > maxPageSize)
+                pageSize = maxPageSize;
+
+            var (zlecenia, paginationMetadata) = await _zleceniumRepository
+                .GetZleceniumAsync(data, idProduktu, pageNumber, pageSize);
+
+            Response.Headers.Add("X-Pagination",
+                JsonSerializer.Serialize(paginationMetadata)); 
+            return Ok(_mapper.Map<IEnumerable<ZleceniumDto>>(zlecenia));
         }
         [HttpGet("{id}", Name = "GetZlecenium")]
         public async Task<ActionResult<ZleceniumDto>> GetZlecenium(int id)

@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
 using prodAPI.Models;
 using prodAPI.Services;
+using System.Text.Json;
 
 namespace prodAPI.Controllers
 {
@@ -13,6 +14,7 @@ namespace prodAPI.Controllers
         private readonly ILogger<EtapyController> _logger;
         private readonly IEtapyRepository _etapyRepository;
         private readonly IMapper _mapper;
+        const int maxPageSize = 20;
         public EtapyController(IEtapyRepository etapyRepository, ILogger<EtapyController> logger, IMapper mapper)
         {
             _etapyRepository = etapyRepository ?? throw new ArgumentNullException(nameof(etapyRepository));
@@ -21,9 +23,18 @@ namespace prodAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<EtapyDto>>> GetEtapy()
+        public async Task<ActionResult<IEnumerable<EtapyDto>>> GetEtapy(
+            int? idProduktu, string? nazwa, string? searchQuery,
+            int pageNumber=1, int pageSize=10)
         {
-            var etapy = await _etapyRepository.GetEtapyAsync();
+            if (pageSize > maxPageSize)
+                pageSize = maxPageSize;
+
+            var (etapy, paginationMetadata) = await _etapyRepository
+                .GetEtapyAsync(idProduktu, nazwa, searchQuery, pageNumber, pageSize);
+
+            Response.Headers.Add("X-Pagination",
+                JsonSerializer.Serialize(paginationMetadata));
             return Ok(etapy);
         }
         [HttpGet("{id}", Name = "GetEtap")]

@@ -1,12 +1,14 @@
 ﻿using prodAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using prodAPI.Entities;
+
 
 namespace prodAPI.Services
 {
     public interface IZleceniumRepository
     {
-        Task<IEnumerable<ZleceniumDto>> GetZleceniumAsync();
+        Task<(IEnumerable<ZleceniumDto>, PaginationMetadata)> GetZleceniumAsync(
+            DateTime? data, int? idProduktu, 
+            int pageNumber, int pageSize);
         Task<ZleceniumDto?> GetZleceniumAsync(int idZleceniumu);
         Task AddZleceniumAsync(ZleceniumDto Zlecenium);
 

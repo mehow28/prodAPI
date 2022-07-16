@@ -1,12 +1,15 @@
 ﻿using prodAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using prodAPI.Entities;
+
 
 namespace prodAPI.Services
 {
     public interface IProduktyRepository
     {
+
         Task<IEnumerable<ProduktyDto>> GetProduktyAsync();
+        Task<(IEnumerable<ProduktyDto>, PaginationMetadata)> GetProduktyAsync(
+            string? nazwa, string? searchQuery, int pageNumber, int pageSize);
         Task<ProduktyDto?> GetProduktyAsync(int idProduktu);
         Task AddProduktAsync(ProduktyDto produkt);
 

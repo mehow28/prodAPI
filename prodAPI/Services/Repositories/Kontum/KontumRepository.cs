@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using prodAPI.Entities;
+
 using prodAPI.Models;
 using System.Security.Cryptography;
 using System.Text;
@@ -40,7 +40,7 @@ namespace prodAPI.Services
 
         public async Task AddKontoAsync(KontumDto konto)
         {
-            _context.Konties.Add(konto);
+           _context.Konties.Add(konto);
         }
         public async Task<bool> SaveChangesAsync()
         {

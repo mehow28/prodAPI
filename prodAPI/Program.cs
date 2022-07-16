@@ -15,7 +15,7 @@ builder.Services.AddControllers().AddNewtonsoftJson();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
-var connectionString = builder.Configuration.GetConnectionString("Conn2");
+var connectionString = builder.Configuration.GetConnectionString("Conn1");
 builder.Services.AddDbContext<production_dbContext>(x => x.UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IEtapyRepository, EtapyRepository>();

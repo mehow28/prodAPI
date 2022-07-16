@@ -1,6 +1,6 @@
 ﻿using prodAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using prodAPI.Entities;
+
 
 namespace prodAPI.Services
 {

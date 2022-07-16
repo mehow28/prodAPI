@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using Microsoft.AspNetCore.JsonPatch;
 using Microsoft.AspNetCore.Mvc;
+using System.Text.Json;
 using prodAPI.Models;
 using prodAPI.Services;
 
@@ -13,6 +14,7 @@ namespace prodAPI.Controllers
         private readonly ILogger<ProduktyController> _logger;
         private readonly IProduktyRepository _produktyRepository;
         private readonly IMapper _mapper;
+        const int maxProduktyPageSize = 20;
         public ProduktyController(IProduktyRepository productionRepository, ILogger<ProduktyController> logger, IMapper mapper)
         {
             _produktyRepository = productionRepository ?? throw new ArgumentNullException(nameof(productionRepository));
@@ -22,9 +24,17 @@ namespace prodAPI.Controllers
        
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProduktyDto>>> GetProdukty()
+        public async Task<ActionResult<IEnumerable<ProduktyDto>>> GetProdukty(
+            string? nazwa, string? searchQuery, int pageNumber = 1, int pageSize = 10)
         {
-            var products = await _produktyRepository.GetProduktyAsync();
+            if (pageSize > maxProduktyPageSize)
+                pageSize = maxProduktyPageSize;
+
+            var (products,paginationMetadata) = await _produktyRepository
+                .GetProduktyAsync(nazwa, searchQuery, pageNumber, pageSize);
+
+            Response.Headers.Add("X-Pagination",
+                JsonSerializer.Serialize(paginationMetadata));
             return Ok(_mapper.Map<IEnumerable<ProduktyDto>>(products));
         }
         [HttpGet("{id}", Name = "GetProdukt")]

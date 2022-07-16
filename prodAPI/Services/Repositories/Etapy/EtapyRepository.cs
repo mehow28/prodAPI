@@ -16,9 +16,39 @@ namespace prodAPI.Services
             return await _context.Etapies.Where(c => c.IdEtapu == idEtapu).FirstOrDefaultAsync();
         }
 
-        public async Task<IEnumerable<EtapyDto>> GetEtapyAsync()
+        public async Task<(IEnumerable<EtapyDto>, PaginationMetadata)> GetEtapyAsync(
+            int? idProduktu, string? nazwa, string? searchQuery,
+            int pageNumber, int pageSize)
         {
-            return await _context.Etapies.OrderBy(c => c.IdEtapu).ToListAsync();
+            var collection = _context.Etapies as IQueryable<EtapyDto>;
+
+            if (!string.IsNullOrWhiteSpace(nazwa))
+            {
+                nazwa = nazwa.Trim().ToLower();
+                collection = collection.Where(c => c.Nazwa.ToLower() == nazwa);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim().ToLower();
+                collection = collection.Where(q => q.Nazwa.Contains(searchQuery.ToLower()));
+            }
+
+            if (idProduktu != null)
+                collection = collection.Where(c => c.IdProduktu == idProduktu);
+
+            var totalItemCount = await collection.CountAsync();
+            var paginationMetadata = new PaginationMetadata(
+                totalItemCount, pageSize, pageNumber);
+
+            var retCol = await collection
+                .OrderBy(c => c.IdEtapu)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (retCol, paginationMetadata);
+
         }
 
         public async Task AddEtapAsync(EtapyDto etap)

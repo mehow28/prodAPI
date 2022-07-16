@@ -1,5 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using prodAPI.Entities;
+
 using prodAPI.Models;
 
 namespace prodAPI.Services
@@ -16,9 +16,55 @@ namespace prodAPI.Services
         {
             return await _context.Maszynies.Where(c=>c.IdMaszyny==idMaszyny).FirstOrDefaultAsync();
         }
-        public async Task<IEnumerable<MaszynyDto>> GetMaszynyAsync()
+        public async Task<(IEnumerable<MaszynyDto>,PaginationMetadata)> GetMaszynyAsync(
+            string? nazwa, string? marka, string? model, DateTime? dataPrzegladu,
+            string? searchQuery, int pageNumber, int pageSize)
         {
-            return await _context.Maszynies.ToListAsync();
+            var collection = _context.Maszynies as IQueryable<MaszynyDto>;
+
+            if (!string.IsNullOrWhiteSpace(nazwa))
+            {
+                nazwa = nazwa.Trim().ToLower();
+                collection = collection.Where(c => c.Nazwa.ToLower() == nazwa);
+            }
+
+            if (!string.IsNullOrWhiteSpace(model))
+            {
+                model = model.Trim().ToLower();
+                collection = collection.Where(c => c.Model.ToLower() == model);
+            }
+
+            if (!string.IsNullOrWhiteSpace(marka))
+            {
+                marka = marka.Trim().ToLower();
+                collection = collection.Where(c => c.Marka.ToLower() == marka);
+            }
+
+            if (dataPrzegladu is not null)
+            {
+                collection = collection.Where(c => c.DataPrzegladu>dataPrzegladu);
+            }
+
+            if (!string.IsNullOrWhiteSpace(searchQuery))
+            {
+                searchQuery = searchQuery.Trim().ToLower();
+                collection = collection
+                    .Where(q => q.Nazwa.Contains(searchQuery.ToLower())
+                    || (q.Marka.Contains(searchQuery.ToLower()))
+                    || (q.Model.Contains(searchQuery.ToLower())));
+            }
+
+            var totalItemCount = await collection.CountAsync();
+            var paginationMetadata = new PaginationMetadata(
+                totalItemCount, pageSize, pageNumber);
+
+            var retCol = await collection
+                .OrderBy(c => c.IdMaszyny)
+                .Skip(pageSize * (pageNumber - 1))
+                .Take(pageSize)
+                .ToListAsync();
+
+            return (retCol, paginationMetadata);
         }
 
         public async Task AddMaszynaAsync(MaszynyDto maszyna)

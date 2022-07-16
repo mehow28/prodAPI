@@ -1,12 +1,14 @@
 ﻿using prodAPI.Models;
 using Microsoft.EntityFrameworkCore;
-using prodAPI.Entities;
+
 
 namespace prodAPI.Services
 {
     public interface IMaszynyRepository
     {
-        Task<IEnumerable<MaszynyDto>> GetMaszynyAsync();
+        Task<(IEnumerable<MaszynyDto>, PaginationMetadata)> GetMaszynyAsync(
+            string? nazwa, string? marka, string? model, DateTime? dataPrzegladu,
+            string? searchQuery, int pageNumber, int pageSize);
         Task<MaszynyDto?> GetMaszynyAsync(int idMaszyna);
         Task AddMaszynaAsync(MaszynyDto maszyna);
 

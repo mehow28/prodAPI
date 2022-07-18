@@ -8,10 +8,9 @@ namespace prodAPI.Services
     {
         Task<IEnumerable<KontumDto>> GetKontumAsync();
         Task<KontumDto?> GetKontumAsync(int idKontumu);
-        Task AddKontoAsync(KontumDto konto);
+        Task AddKontoAsync(KontumCreationDto konto);
 
         void DeleteKonto(KontumDto konto);
         Task<bool> SaveChangesAsync();
-        string getHash(string text);
     }
 }

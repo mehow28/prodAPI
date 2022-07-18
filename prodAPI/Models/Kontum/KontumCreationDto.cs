@@ -10,8 +10,8 @@ namespace prodAPI.Models
         [MaxLength(50)]
         public string Login { get; set; } = null!;
         [Required]
-        [MaxLength(64)]
-        public byte[] Haslo { get; set; } = null!;
+        [MaxLength(50)]
+        public string Haslo { get; set; } = null!;
         [Required]
         [MaxLength(50)]
         public string Uprawnienia { get; set; } = null!;

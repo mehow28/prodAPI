@@ -36,10 +36,10 @@ namespace prodAPI.Controllers
             return Ok(foundKontum);
         }
         [HttpPost]
-        public async Task<ActionResult<KontumDto>> CreateKontum(KontumCreationDto Kontum)
+        public async Task<ActionResult<KontumDto>> CreateKontum(KontumCreationDto kontum)
         {
-            var newKontum = _mapper.Map<KontumDto>(Kontum);
-            await _kontumRepository.AddKontoAsync(newKontum);
+            var newKontum = _mapper.Map<KontumDto>(kontum);
+            await _kontumRepository.AddKontoAsync(kontum);
             await _kontumRepository.SaveChangesAsync();
 
             return CreatedAtRoute("GetKontum",

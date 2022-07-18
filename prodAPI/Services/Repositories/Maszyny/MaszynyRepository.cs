@@ -4,11 +4,11 @@ using prodAPI.Models;
 
 namespace prodAPI.Services
 {
-    public class MaszynyRepository : IMaszynyRepository
+    public class AuthenticationRepository : IMaszynyRepository
     {
         private production_dbContext _context;
 
-        public MaszynyRepository(production_dbContext context)
+        public AuthenticationRepository(production_dbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
@@ -45,8 +45,8 @@ namespace prodAPI.Services
                 collection = collection.Where(c => c.DataPrzegladu>dataPrzegladu);
             }
 
-            if (!string.IsNullOrWhiteSpace(searchQuery))
-            {
+                if (!string.IsNullOrWhiteSpace(searchQuery))
+                {
                 searchQuery = searchQuery.Trim().ToLower();
                 collection = collection
                     .Where(q => q.Nazwa.Contains(searchQuery.ToLower())

@@ -17,7 +17,7 @@ namespace prodAPI.Controllers
         const int maxPageSize = 20;
         public PracownicyController(IPracownicyRepository pracownicyRepository, ILogger<PracownicyController> logger, IMapper mapper)
         {
-            _pracownicyRepository = pracownicyRepository ?? throw new ArgumentNullException(nameof(_pracownicyRepository));
+            _pracownicyRepository = pracownicyRepository ?? throw new ArgumentNullException(nameof(pracownicyRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }

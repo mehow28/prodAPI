@@ -20,7 +20,7 @@ builder.Services.AddDbContext<production_dbContext>(x => x.UseSqlServer(connecti
 
 builder.Services.AddScoped<IEtapyRepository, EtapyRepository>();
 builder.Services.AddScoped<IKontumRepository, KontumRepository>();
-builder.Services.AddScoped<IMaszynyRepository, MaszynyRepository>();
+builder.Services.AddScoped<IMaszynyRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IPracownicyRepository, PracownicyRepository>();
 builder.Services.AddScoped<IProduktyRepository,ProduktyRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();

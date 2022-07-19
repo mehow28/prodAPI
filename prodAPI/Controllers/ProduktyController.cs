@@ -4,10 +4,12 @@ using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
 using prodAPI.Models;
 using prodAPI.Services;
+using Microsoft.AspNetCore.Authorization;
 
 namespace prodAPI.Controllers
 {
     [ApiController]
+    [Authorize]
     [Route("api/produkty")]
     public class ProduktyController : Controller
     {

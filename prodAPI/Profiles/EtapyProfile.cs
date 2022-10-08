@@ -3,13 +3,13 @@ using prodAPI.Models;
 
 namespace prodAPI.Profiles
 {
-    public class EtapyProfile : Profile
+    public class ProduktyDlaEtapuProfile : Profile
     {
-        public EtapyProfile()
+        public ProduktyDlaEtapuProfile()
         { 
-            CreateMap<EtapyCreationDto, EtapyDto>();
-            CreateMap<EtapyUpdateDto, EtapyDto>();
-            CreateMap<EtapyDto, EtapyUpdateDto>();
+            CreateMap<ProduktyDlaEtapuCreationDto, ProduktyDlaEtapuDto>();
+            CreateMap<EtapyUpdateDto, ProduktyDlaEtapuDto>();
+            CreateMap<ProduktyDlaEtapuDto, ProduktyDlaEtapuUpdateDto>();
         }
     }
 }

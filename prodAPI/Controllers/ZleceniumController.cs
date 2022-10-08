@@ -25,14 +25,14 @@ namespace prodAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<ZleceniumDto>>> GetZlecenium(
-            DateTime? data, int? idProduktu,
+            DateTime? dataRozpoczecia, DateTime? dataZakonczenia, 
             int pageNumber = 1, int pageSize = 10)
         {
             if (pageSize > maxPageSize)
                 pageSize = maxPageSize;
 
             var (zlecenia, paginationMetadata) = await _zleceniumRepository
-                .GetZleceniumAsync(data, idProduktu, pageNumber, pageSize);
+                .GetZleceniumAsync(dataRozpoczecia, dataZakonczenia, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(paginationMetadata)); 

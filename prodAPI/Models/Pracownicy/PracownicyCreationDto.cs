@@ -17,6 +17,6 @@ namespace prodAPI.Models
         public string Email { get; set; } = null!;
         [Required]
         [MaxLength(50)]
-        public string NrTel { get; set; } = null!;
+        public string Nrtel { get; set; } = null!;
     }
 }

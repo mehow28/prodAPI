@@ -11,13 +11,13 @@ namespace prodAPI.Services
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<EtapyDto?> GetEtapyAsync(int idEtapu)
+        public async Task<EtapyDto?> GetEtapAsync(int idEtapu)
         {
             return await _context.Etapies.Where(c => c.IdEtapu == idEtapu).FirstOrDefaultAsync();
         }
 
         public async Task<(IEnumerable<EtapyDto>, PaginationMetadata)> GetEtapyAsync(
-            int? idProduktu, string? nazwa, string? searchQuery,
+            string? nazwa, string? searchQuery,
             int pageNumber, int pageSize)
         {
             var collection = _context.Etapies as IQueryable<EtapyDto>;
@@ -33,10 +33,6 @@ namespace prodAPI.Services
                 searchQuery = searchQuery.Trim().ToLower();
                 collection = collection.Where(q => q.Nazwa.Contains(searchQuery.ToLower()));
             }
-
-            if (idProduktu != null)
-                collection = collection.Where(c => c.IdProduktu == idProduktu);
-
             var totalItemCount = await collection.CountAsync();
             var paginationMetadata = new PaginationMetadata(
                 totalItemCount, pageSize, pageNumber);

@@ -11,11 +11,12 @@ namespace prodAPI.Models
         }
 
         public int IdZlecenia { get; set; }
-        public DateTime? Data { get; set; }
-        public int? IdProduktu { get; set; }
-        public int? Ilosc { get; set; }
+        public DateTime? DataRozpoczecia { get; set; }
+        public int Ilosc { get; set; }
+        public bool Stan { get; set; }
+        public DateTime? DataZakonczenia { get; set; }
+        public string Opis { get; set; } = null!;
 
-        public virtual ProduktyDto? IdProduktuNavigation { get; set; }
         public virtual ICollection<StatusDto> Statuses { get; set; }
     }
 }

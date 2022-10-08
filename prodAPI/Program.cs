@@ -4,6 +4,7 @@ using prodAPI.Models;
 using Serilog;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
+using Azure.Identity;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -11,6 +12,9 @@ Log.Logger = new LoggerConfiguration()
     .CreateLogger();
 
 var builder = WebApplication.CreateBuilder(args);
+
+//var keyVaultEndpoint = new Uri(Environment.GetEnvironmentVariable("VaultUri"));
+//builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
 builder.Services.AddControllers().AddNewtonsoftJson();
@@ -24,7 +28,8 @@ builder.Services.AddScoped<IEtapyRepository, EtapyRepository>();
 builder.Services.AddScoped<IKontumRepository, KontumRepository>();
 builder.Services.AddScoped<IMaszynyRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IPracownicyRepository, PracownicyRepository>();
-builder.Services.AddScoped<IProduktyRepository,ProduktyRepository>();
+builder.Services.AddScoped<IProduktyRepository, ProduktyRepository>();
+builder.Services.AddScoped<IProduktyDlaEtapuRepository, ProduktyDlaEtapuRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IZleceniumRepository, ZleceniumRepository>();
 
@@ -45,6 +50,16 @@ builder.Services.AddAuthentication("Bearer")
         };
     });
 
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy("MyAllowSpecificOrigins",
+                          policy =>
+                          {
+                              policy.WithOrigins("http://localhost:8100")
+                                                  .AllowAnyHeader()
+                                                  .AllowAnyMethod();
+                          });
+});
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -54,6 +69,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwaggerUI();
 }
 app.UseHttpsRedirection();
+
+app.UseCors("MyAllowSpecificOrigins");
 
 app.UseRouting();
 

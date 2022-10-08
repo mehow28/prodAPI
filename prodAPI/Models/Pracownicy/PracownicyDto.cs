@@ -15,7 +15,7 @@ namespace prodAPI.Models
         public string Imie { get; set; } = null!;
         public string Nazwisko { get; set; } = null!;
         public string Email { get; set; } = null!;
-        public string NrTel { get; set; } = null!;
+        public string Nrtel { get; set; } = null!;
 
         public virtual ICollection<KontumDto> Konta { get; set; }
         public virtual ICollection<StatusDto> Statuses { get; set; }

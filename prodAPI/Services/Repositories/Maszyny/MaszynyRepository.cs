@@ -17,7 +17,7 @@ namespace prodAPI.Services
             return await _context.Maszynies.Where(c=>c.IdMaszyny==idMaszyny).FirstOrDefaultAsync();
         }
         public async Task<(IEnumerable<MaszynyDto>,PaginationMetadata)> GetMaszynyAsync(
-            string? nazwa, string? marka, string? model, DateTime? dataPrzegladu,
+            string? nazwa, string? marka, string? model, string? kategoria,
             string? searchQuery, int pageNumber, int pageSize)
         {
             var collection = _context.Maszynies as IQueryable<MaszynyDto>;
@@ -39,13 +39,13 @@ namespace prodAPI.Services
                 marka = marka.Trim().ToLower();
                 collection = collection.Where(c => c.Marka.ToLower() == marka);
             }
-
-            if (dataPrzegladu is not null)
+            if (!string.IsNullOrWhiteSpace(kategoria))
             {
-                collection = collection.Where(c => c.DataPrzegladu>dataPrzegladu);
+                kategoria = kategoria.Trim().ToLower();
+                collection = collection.Where(c => c.Kategoria.ToLower() == kategoria);
             }
 
-                if (!string.IsNullOrWhiteSpace(searchQuery))
+            if (!string.IsNullOrWhiteSpace(searchQuery))
                 {
                 searchQuery = searchQuery.Trim().ToLower();
                 collection = collection

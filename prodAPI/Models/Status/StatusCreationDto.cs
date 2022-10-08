@@ -7,21 +7,23 @@ namespace prodAPI.Models
 {
     public partial class StatusCreationDto
     {
+        public bool Stan { get; set; }
         [ForeignKey("IdProduktu")]
         public int IdProduktu { get; set; }
 
         [ForeignKey("IdZlecenia")]
         public int IdZlecenia { get; set; }
 
-        [ForeignKey("IdMaszyny")]
-        public int? IdMaszyny { get; set; }
 
         [ForeignKey("IdPracownika")]
         public int IdPracownika { get; set; }
 
         [ForeignKey("IdEtapu")]
         public int IdEtapu { get; set; }
-        public bool Stan { get; set; }
-        public int CzasTrwania { get; set; }
+        [ForeignKey("IdMaszyny")]
+        public int? IdMaszyny { get; set; }
+        public DateTime DataRozpoczecia { get; set; }
+        public DateTime DataZakonczenia { get; set; }
+        public string Notatki { get; set; } = null!;
     }
 }

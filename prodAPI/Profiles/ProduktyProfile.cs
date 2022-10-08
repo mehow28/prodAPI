@@ -8,8 +8,8 @@ namespace prodAPI.Profiles
         public ProduktyProfile()
         {
             CreateMap<ProduktyCreationDto,ProduktyDto>();
-            CreateMap<ProduktyUpdateDto, ProduktyDto>();
-            CreateMap<ProduktyDto,ProduktyUpdateDto>();
+            CreateMap<ProduktyDlaEtapuUpdateDto, ProduktyDto>();
+            CreateMap<ProduktyDto,ProduktyDlaEtapuUpdateDto>();
         }
     }
 }

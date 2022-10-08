@@ -28,11 +28,12 @@ namespace prodAPI.Controllers
         public class AuthenticationRequestBody
         {
             public string? Login { get; set; }
-            public string? Password { get; set; }  
+            public string? Password { get; set; }
         }
 
         [HttpPost("authenticate")]
-        public ActionResult<string> Authenticate(
+        [Produces("application/json")]
+        public IActionResult Authenticate(
             AuthenticationRequestBody authenticationRequestBody)
         {
            /* var user = ValidateUserCredentials(
@@ -62,12 +63,20 @@ namespace prodAPI.Controllers
                 DateTime.UtcNow.AddHours(1),
                 signingCredentials);
 
-            var tokenToReturn = new JwtSecurityTokenHandler()
+            var authToken = new JwtSecurityTokenHandler()
                 .WriteToken(jwtSecurityToken);
 
-            return tokenToReturn;
+            return Ok(authToken);
+        }
+        private string GenerateRefreshToken()
+        {
+            var randomNumber = new byte[32];
+            using (var rng = RandomNumberGenerator.Create())
+            {
+                rng.GetBytes(randomNumber);
+                return Convert.ToBase64String(randomNumber);
+            }
         }
 
-       
     }
 }

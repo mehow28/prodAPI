@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace prodAPI.Migrations
 {
-    public partial class StatusFixMig : Migration
+    public partial class newScaff : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -15,11 +15,11 @@ namespace prodAPI.Migrations
                 {
                     id_maszyny = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    nazwa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: true),
                     marka = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     model = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     opis = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    data_przegladu = table.Column<DateTime>(type: "date", nullable: false)
+                    nazwa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    kategoria = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -35,7 +35,7 @@ namespace prodAPI.Migrations
                     imie = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     nazwisko = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     email = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    nr_tel = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
+                    nrtel = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false)
                 },
                 constraints: table =>
                 {
@@ -84,8 +84,7 @@ namespace prodAPI.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     id_produktu = table.Column<int>(type: "int", nullable: false),
                     nazwa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    czas = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    kolejnosc = table.Column<int>(type: "int", nullable: false)
+                    opis = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -103,9 +102,12 @@ namespace prodAPI.Migrations
                 {
                     id_zlecenia = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    data = table.Column<DateTime>(type: "date", nullable: true),
-                    id_produktu = table.Column<int>(type: "int", nullable: true),
-                    ilosc = table.Column<int>(type: "int", nullable: true)
+                    id_produktu = table.Column<int>(type: "int", nullable: false),
+                    data_rozpoczecia = table.Column<DateTime>(type: "date", nullable: false),
+                    ilosc = table.Column<int>(type: "int", nullable: false),
+                    stan = table.Column<bool>(type: "bit", nullable: false),
+                    data_zakonczenia = table.Column<DateTime>(type: "date", nullable: false),
+                    opis = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -118,22 +120,49 @@ namespace prodAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Produkty_Dla_Etapu",
+                columns: table => new
+                {
+                    id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    stan = table.Column<bool>(type: "bit", nullable: false),
+                    id_etapu = table.Column<int>(type: "int", nullable: false),
+                    id_produktu = table.Column<int>(type: "int", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Produkty_Dla_Etapu", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_Produkty_Dla_Etapu_8_1",
+                        column: x => x.id_produktu,
+                        principalTable: "Produkty",
+                        principalColumn: "id_produktu");
+                    table.ForeignKey(
+                        name: "FK_Produkty_Dla_Etapu_9",
+                        column: x => x.id_etapu,
+                        principalTable: "Etapy",
+                        principalColumn: "id_etapu");
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Status",
                 columns: table => new
                 {
                     id_statusu = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    id_produktu = table.Column<int>(type: "int", nullable: false),
+                    stan = table.Column<bool>(type: "bit", nullable: false),
                     id_zlecenia = table.Column<int>(type: "int", nullable: false),
-                    id_maszyny = table.Column<int>(type: "int", nullable: true),
+                    id_produktu = table.Column<int>(type: "int", nullable: false),
                     id_pracownika = table.Column<int>(type: "int", nullable: false),
                     id_etapu = table.Column<int>(type: "int", nullable: false),
-                    stan = table.Column<bool>(type: "bit", nullable: false),
-                    czas_trwania = table.Column<int>(type: "int", nullable: false)
+                    id_maszyny = table.Column<int>(type: "int", nullable: false),
+                    data_rozpoczecia = table.Column<DateTime>(type: "date", nullable: false),
+                    data_zakonczenia = table.Column<DateTime>(type: "date", nullable: false),
+                    notatki = table.Column<string>(type: "text", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Status", x => x.id_statusu);
+                    table.PrimaryKey("PK_Status_1", x => x.id_statusu);
                     table.ForeignKey(
                         name: "FK_Status_Etapy",
                         column: x => x.id_etapu,
@@ -172,6 +201,16 @@ namespace prodAPI.Migrations
                 column: "id_pracownika");
 
             migrationBuilder.CreateIndex(
+                name: "FK_Produkty_Dla_Etapu_2",
+                table: "Produkty_Dla_Etapu",
+                column: "id_produktu");
+
+            migrationBuilder.CreateIndex(
+                name: "FK_Produkty_Dla_Etapu_3",
+                table: "Produkty_Dla_Etapu",
+                column: "id_etapu");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_Status_id_etapu",
                 table: "Status",
                 column: "id_etapu");
@@ -206,6 +245,9 @@ namespace prodAPI.Migrations
         {
             migrationBuilder.DropTable(
                 name: "Konties");
+
+            migrationBuilder.DropTable(
+                name: "Produkty_Dla_Etapu");
 
             migrationBuilder.DropTable(
                 name: "Status");

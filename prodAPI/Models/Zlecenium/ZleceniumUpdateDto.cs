@@ -7,9 +7,10 @@ namespace prodAPI.Models
 {
     public partial class ZleceniumUpdateDto
     {
-        public DateTime? Data { get; set; }
-        [ForeignKey("IdProduktu")]
-        public int? IdProduktu { get; set; }
+        public DateTime? DataRozpoczecia { get; set; }
         public int? Ilosc { get; set; }
+        public bool? Stan { get; set; }
+        public DateTime? DataZakonczenia { get; set; }
+        public string Opis { get; set; } = null!;
     }
 }

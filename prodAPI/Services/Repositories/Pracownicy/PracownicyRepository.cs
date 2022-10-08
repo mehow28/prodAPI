@@ -37,7 +37,7 @@ namespace prodAPI.Services
             if (!string.IsNullOrWhiteSpace(nrTel))
             {
                 nrTel = nrTel.Trim().ToLower();
-                collection = collection.Where(c => c.NrTel.ToLower() == nrTel);
+                collection = collection.Where(c => c.Nrtel.ToLower() == nrTel);
             }
 
             if (!string.IsNullOrWhiteSpace(searchQuery))
@@ -46,7 +46,7 @@ namespace prodAPI.Services
                 collection = collection
                     .Where(q => q.Imie.Contains(searchQuery.ToLower())
                     || (q.Email.Contains(searchQuery.ToLower()))
-                    || (q.NrTel.Contains(searchQuery.ToLower()))
+                    || (q.Nrtel.Contains(searchQuery.ToLower()))
                     || (q.Nazwisko.Contains(searchQuery.ToLower())));
             }
 

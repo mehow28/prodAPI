@@ -7,16 +7,15 @@ namespace prodAPI.Models
     {
         public EtapyDto()
         {
+            ProduktyDlaEtapus = new HashSet<ProduktyDlaEtapuDto>();
             Statuses = new HashSet<StatusDto>();
         }
 
         public int IdEtapu { get; set; }
-        public int IdProduktu { get; set; }
         public string Nazwa { get; set; } = null!;
-        public string Czas { get; set; } = null!;
-        public int Kolejnosc { get; set; }
+        public string Opis { get; set; } = null!;
 
-        public virtual ProduktyDto IdProduktuNavigation { get; set; } = null!;
+        public virtual ICollection<ProduktyDlaEtapuDto> ProduktyDlaEtapus { get; set; }
         public virtual ICollection<StatusDto> Statuses { get; set; }
     }
 }

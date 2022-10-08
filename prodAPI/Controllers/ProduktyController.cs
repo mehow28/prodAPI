@@ -9,7 +9,6 @@ using Microsoft.AspNetCore.Authorization;
 namespace prodAPI.Controllers
 {
     [ApiController]
-    [Authorize]
     [Route("api/produkty")]
     public class ProduktyController : Controller
     {
@@ -62,7 +61,7 @@ namespace prodAPI.Controllers
         }
         [HttpPut("{id}")]
         public async Task<ActionResult>  UpdateProduct(
-            int id, ProduktyUpdateDto produkt)
+            int id, ProduktyDlaEtapuUpdateDto produkt)
         {
             var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
             if (foundProdukt is null)
@@ -75,13 +74,13 @@ namespace prodAPI.Controllers
         }
         [HttpPatch("{id}")]
         public async Task<ActionResult> PatchProduct(
-            int id, JsonPatchDocument<ProduktyUpdateDto> patch)
+            int id, JsonPatchDocument<ProduktyDlaEtapuUpdateDto> patch)
         {
             var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
             if (foundProdukt is null)
                 return NotFound();
             
-            var produktToPatch = _mapper.Map<ProduktyUpdateDto>(foundProdukt);
+            var produktToPatch = _mapper.Map<ProduktyDlaEtapuUpdateDto>(foundProdukt);
 
             patch.ApplyTo(produktToPatch, ModelState);
 

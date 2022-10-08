@@ -24,14 +24,14 @@ namespace prodAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<EtapyDto>>> GetEtapy(
-            int? idProduktu, string? nazwa, string? searchQuery,
+            string? nazwa, string? searchQuery,
             int pageNumber=1, int pageSize=10)
         {
             if (pageSize > maxPageSize)
                 pageSize = maxPageSize;
 
             var (etapy, paginationMetadata) = await _etapyRepository
-                .GetEtapyAsync(idProduktu, nazwa, searchQuery, pageNumber, pageSize);
+                .GetEtapyAsync( nazwa, searchQuery, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(paginationMetadata));
@@ -40,7 +40,7 @@ namespace prodAPI.Controllers
         [HttpGet("{id}", Name = "GetEtap")]
         public async Task<ActionResult<EtapyDto>> GetEtap(int id)
         {
-            var foundEtap = await _etapyRepository.GetEtapyAsync(id);
+            var foundEtap = await _etapyRepository.GetEtapAsync(id);
             if (foundEtap == null)
                 return NotFound();
             return Ok(foundEtap);
@@ -55,14 +55,14 @@ namespace prodAPI.Controllers
             return CreatedAtRoute("GetEtap",
                 new
                 {
-                    id = newEtap.IdProduktu
+                    id = newEtap.IdEtapu
                 }, newEtap); ;
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdateEtap(
             int id, EtapyUpdateDto Etap)
         {
-            var foundEtap = await _etapyRepository.GetEtapyAsync(id);
+            var foundEtap = await _etapyRepository.GetEtapAsync(id);
             if (foundEtap is null)
                 return NotFound();
 
@@ -75,7 +75,7 @@ namespace prodAPI.Controllers
         public async Task<ActionResult> PatchEtap(
             int id, JsonPatchDocument<EtapyUpdateDto> patch)
         {
-            var foundEtap = await _etapyRepository.GetEtapyAsync(id);
+            var foundEtap = await _etapyRepository.GetEtapAsync(id);
             if (foundEtap is null)
                 return NotFound();
 
@@ -97,7 +97,7 @@ namespace prodAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeleteEtap(int id)
         {
-            var foundEtap = await _etapyRepository.GetEtapyAsync(id);
+            var foundEtap = await _etapyRepository.GetEtapAsync(id);
             if (foundEtap is null)
                 return NotFound();
 

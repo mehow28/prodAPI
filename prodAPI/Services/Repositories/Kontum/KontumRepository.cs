@@ -33,7 +33,7 @@ namespace prodAPI.Services
         }
         public async Task<KontumDto?> GetKontumAsync(int IdKonta)
         {
-            return await _context.Konties.Where(c=>c.IdKonta==IdKonta).FirstOrDefaultAsync();
+            return await _context.Konties.Where(c => c.IdKonta == IdKonta).FirstOrDefaultAsync();
         }
         public async Task<IEnumerable<KontumDto>> GetKontumAsync()
         {
@@ -42,9 +42,9 @@ namespace prodAPI.Services
 
         public async Task AddKontoAsync(KontumCreationDto konto)
         {
-          
+
             var newKonto = _mapper.Map<KontumDto>(konto);
-            _context.Konties.Add(newKonto);
+            await _context.Konties.AddAsync(newKonto);
         }
         public async Task<bool> SaveChangesAsync()
         {

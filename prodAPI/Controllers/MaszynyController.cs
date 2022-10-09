@@ -26,7 +26,7 @@ namespace prodAPI.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MaszynyDto>>> GetMaszyny(
             string? nazwa, string? marka, string? model, string? kategoria,
-            string? searchQuery, int pageNumber, int pageSize)
+            string? searchQuery, int pageNumber=1, int pageSize=10)
         {
             if (pageSize > maxPageSize)
                 pageSize = maxPageSize;

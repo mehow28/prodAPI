@@ -12,9 +12,9 @@ namespace prodAPI.Models
         public int IdPracownika { get; set; }
         public int IdEtapu { get; set; }
         public int IdMaszyny { get; set; }
-        public DateTime DataRozpoczecia { get; set; }
-        public DateTime DataZakonczenia { get; set; }
-        public string Notatki { get; set; } = null!;
+        public DateTime? DataRozpoczecia { get; set; }
+        public DateTime? DataZakonczenia { get; set; }
+        public string? Notatki { get; set; } = null!;
 
         public virtual EtapyDto IdEtapuNavigation { get; set; } = null!;
         public virtual MaszynyDto IdMaszynyNavigation { get; set; } = null!;

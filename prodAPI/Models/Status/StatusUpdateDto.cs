@@ -23,7 +23,7 @@ namespace prodAPI.Models
         [ForeignKey("IdMaszyny")]
         public int? IdMaszyny { get; set; }
         public DateTime DataRozpoczecia { get; set; }
-        public DateTime DataZakonczenia { get; set; }
-        public string Notatki { get; set; } = null!;
+        public DateTime? DataZakonczenia { get; set; }
+        public string? Notatki { get; set; } = null!;
     }
 }

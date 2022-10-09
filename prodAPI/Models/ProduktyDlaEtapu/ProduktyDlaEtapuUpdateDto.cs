@@ -12,7 +12,7 @@ namespace prodAPI.Models
         [Required]
         public int IdEtapu { get; set; }
         [Required]
-        public int? FaktycznaIlosc { get; set; }
+        public int FaktycznaIlosc { get; set; }
         [Required]
         public int IdProduktu { get; set; }
     }

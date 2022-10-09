@@ -69,7 +69,7 @@ namespace prodAPI.Services
 
         public async Task AddMaszynaAsync(MaszynyDto maszyna)
         {
-            _context.Maszynies.Add(maszyna);
+           await _context.Maszynies.AddAsync(maszyna);
         }
         public async Task<bool> SaveChangesAsync()
         {

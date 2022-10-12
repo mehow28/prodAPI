@@ -61,7 +61,7 @@ namespace prodAPI.Controllers
         }
         [HttpPut("{id}")]
         public async Task<ActionResult>  UpdateProduct(
-            int id, ProduktyDlaEtapuUpdateDto produkt)
+            int id, ProduktyUpdateDto produkt)
         {
             var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
             if (foundProdukt is null)
@@ -74,13 +74,13 @@ namespace prodAPI.Controllers
         }
         [HttpPatch("{id}")]
         public async Task<ActionResult> PatchProduct(
-            int id, JsonPatchDocument<ProduktyDlaEtapuUpdateDto> patch)
+            int id, JsonPatchDocument<ProduktyUpdateDto> patch)
         {
             var foundProdukt = await _produktyRepository.GetProduktyAsync(id);
             if (foundProdukt is null)
                 return NotFound();
             
-            var produktToPatch = _mapper.Map<ProduktyDlaEtapuUpdateDto>(foundProdukt);
+            var produktToPatch = _mapper.Map<ProduktyUpdateDto>(foundProdukt);
 
             patch.ApplyTo(produktToPatch, ModelState);
 

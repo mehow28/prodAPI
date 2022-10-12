@@ -1,21 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace prodAPI.Models
 {
-    public partial class EtapyDto
+    public partial class SurowceDto
     {
-        public EtapyDto()
+        public SurowceDto()
         {
             SurowceDlaEtapus = new HashSet<SurowceDlaEtapuDto>();
-            Statuses = new HashSet<StatusDto>();
         }
-
-        public int IdEtapu { get; set; }
+       
+        public int IdSurowca { get; set; }
         public string Nazwa { get; set; } = null!;
-        public string Opis { get; set; } = null!;
 
         public virtual ICollection<SurowceDlaEtapuDto> SurowceDlaEtapus { get; set; }
-        public virtual ICollection<StatusDto> Statuses { get; set; }
     }
 }

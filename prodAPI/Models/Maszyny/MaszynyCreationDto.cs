@@ -21,5 +21,7 @@ namespace prodAPI.Models
         [Required]
         [MaxLength(50)]
         public string? Kategoria { get; set; }
+
+        public DateTime? DataPrzegladu { get; set; }
     }
 }

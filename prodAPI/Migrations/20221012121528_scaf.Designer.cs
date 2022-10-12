@@ -12,8 +12,8 @@ using prodAPI.Models;
 namespace prodAPI.Migrations
 {
     [DbContext(typeof(production_dbContext))]
-    [Migration("20221008200401_oldScaffFix")]
-    partial class oldScaffFix
+    [Migration("20221012121528_scaf")]
+    partial class scaf
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -236,11 +236,11 @@ namespace prodAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStatusu"), 1L, 1);
 
-                    b.Property<DateTime>("DataRozpoczecia")
+                    b.Property<DateTime?>("DataRozpoczecia")
                         .HasColumnType("date")
                         .HasColumnName("data_rozpoczecia");
 
-                    b.Property<DateTime>("DataZakonczenia")
+                    b.Property<DateTime?>("DataZakonczenia")
                         .HasColumnType("date")
                         .HasColumnName("data_zakonczenia");
 
@@ -265,7 +265,6 @@ namespace prodAPI.Migrations
                         .HasColumnName("id_zlecenia");
 
                     b.Property<string>("Notatki")
-                        .IsRequired()
                         .HasColumnType("text")
                         .HasColumnName("notatki");
 

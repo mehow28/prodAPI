@@ -1,20 +1,19 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
-using System.ComponentModel.DataAnnotations.Schema;
 
 namespace prodAPI.Models
 {
-    public partial class ProduktyDlaEtapuCreationDto
+    public partial class SurowceDlaEtapuUpdateDto
     {
-        
+
         [Required]
         public bool Stan { get; set; }
         [Required]
         public int IdEtapu { get; set; }
         [Required]
-        public int PotrzebnaIlosc { get; set; }
+        public int FaktycznaIlosc { get; set; }
         [Required]
-        public int IdProduktu { get; set; }
+        public int IdSurowca { get; set; }
     }
 }

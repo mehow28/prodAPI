@@ -5,10 +5,24 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace prodAPI.Migrations
 {
-    public partial class newScaff : Migration
+    public partial class scaf : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.CreateTable(
+                name: "Etapy",
+                columns: table => new
+                {
+                    id_etapu = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    nazwa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
+                    opis = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_etapy", x => x.id_etapu);
+                });
+
             migrationBuilder.CreateTable(
                 name: "Maszyny",
                 columns: table => new
@@ -56,6 +70,23 @@ namespace prodAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "Zlecenia",
+                columns: table => new
+                {
+                    id_zlecenia = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    data_rozpoczecia = table.Column<DateTime>(type: "date", nullable: true),
+                    ilosc = table.Column<int>(type: "int", nullable: false),
+                    stan = table.Column<bool>(type: "bit", nullable: false),
+                    data_zakonczenia = table.Column<DateTime>(type: "date", nullable: true),
+                    opis = table.Column<string>(type: "text", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Zlecenia", x => x.id_zlecenia);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Konties",
                 columns: table => new
                 {
@@ -77,55 +108,14 @@ namespace prodAPI.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Etapy",
-                columns: table => new
-                {
-                    id_etapu = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_produktu = table.Column<int>(type: "int", nullable: false),
-                    nazwa = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
-                    opis = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_etapy", x => x.id_etapu);
-                    table.ForeignKey(
-                        name: "FK_Etapy_Produkty",
-                        column: x => x.id_produktu,
-                        principalTable: "Produkty",
-                        principalColumn: "id_produktu");
-                });
-
-            migrationBuilder.CreateTable(
-                name: "Zlecenia",
-                columns: table => new
-                {
-                    id_zlecenia = table.Column<int>(type: "int", nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    id_produktu = table.Column<int>(type: "int", nullable: false),
-                    data_rozpoczecia = table.Column<DateTime>(type: "date", nullable: false),
-                    ilosc = table.Column<int>(type: "int", nullable: false),
-                    stan = table.Column<bool>(type: "bit", nullable: false),
-                    data_zakonczenia = table.Column<DateTime>(type: "date", nullable: false),
-                    opis = table.Column<string>(type: "text", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Zlecenia", x => x.id_zlecenia);
-                    table.ForeignKey(
-                        name: "FK_Zlecenia_Produkty",
-                        column: x => x.id_produktu,
-                        principalTable: "Produkty",
-                        principalColumn: "id_produktu");
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Produkty_Dla_Etapu",
                 columns: table => new
                 {
                     id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     stan = table.Column<bool>(type: "bit", nullable: false),
+                    PotrzebnaIlosc = table.Column<int>(type: "int", nullable: false),
+                    FaktycznaIlosc = table.Column<int>(type: "int", nullable: true),
                     id_etapu = table.Column<int>(type: "int", nullable: false),
                     id_produktu = table.Column<int>(type: "int", nullable: false)
                 },
@@ -156,9 +146,9 @@ namespace prodAPI.Migrations
                     id_pracownika = table.Column<int>(type: "int", nullable: false),
                     id_etapu = table.Column<int>(type: "int", nullable: false),
                     id_maszyny = table.Column<int>(type: "int", nullable: false),
-                    data_rozpoczecia = table.Column<DateTime>(type: "date", nullable: false),
-                    data_zakonczenia = table.Column<DateTime>(type: "date", nullable: false),
-                    notatki = table.Column<string>(type: "text", nullable: false)
+                    data_rozpoczecia = table.Column<DateTime>(type: "date", nullable: true),
+                    data_zakonczenia = table.Column<DateTime>(type: "date", nullable: true),
+                    notatki = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -189,11 +179,6 @@ namespace prodAPI.Migrations
                         principalTable: "Zlecenia",
                         principalColumn: "id_zlecenia");
                 });
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Etapy_id_produktu",
-                table: "Etapy",
-                column: "id_produktu");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Konties_id_pracownika",
@@ -234,11 +219,6 @@ namespace prodAPI.Migrations
                 name: "IX_Status_id_zlecenia",
                 table: "Status",
                 column: "id_zlecenia");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Zlecenia_id_produktu",
-                table: "Zlecenia",
-                column: "id_produktu");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -262,10 +242,10 @@ namespace prodAPI.Migrations
                 name: "Pracownicy");
 
             migrationBuilder.DropTable(
-                name: "Zlecenia");
+                name: "Produkty");
 
             migrationBuilder.DropTable(
-                name: "Produkty");
+                name: "Zlecenia");
         }
     }
 }

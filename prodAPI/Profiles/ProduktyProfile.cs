@@ -7,9 +7,9 @@ namespace prodAPI.Profiles
     {
         public ProduktyProfile()
         {
-            CreateMap<ProduktyCreationDto,ProduktyDto>();
-            CreateMap<ProduktyDlaEtapuUpdateDto, ProduktyDto>();
-            CreateMap<ProduktyDto,ProduktyDlaEtapuUpdateDto>();
+            CreateMap<ProduktyCreationDto, ProduktyDto>();
+            CreateMap<ProduktyUpdateDto, ProduktyDto>();
+            CreateMap<SurowceDto,SurowceDto>();
         }
     }
 }

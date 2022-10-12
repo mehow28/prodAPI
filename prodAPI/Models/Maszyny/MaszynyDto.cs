@@ -16,6 +16,7 @@ namespace prodAPI.Models
         public string Opis { get; set; } = null!;
         public string Nazwa { get; set; } = null!;
         public string Kategoria { get; set; } = null!;
+        public DateTime? DataPrzegladu { get; set; }
 
         public virtual ICollection<StatusDto> Statuses { get; set; }
     }

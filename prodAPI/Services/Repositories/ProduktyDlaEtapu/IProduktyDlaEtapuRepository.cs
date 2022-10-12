@@ -4,13 +4,13 @@ namespace prodAPI.Services
 {
     public interface IProduktyDlaEtapuRepository
     {
-        Task<(IEnumerable<ProduktyDlaEtapuDto>,PaginationMetadata)> GetProduktyDlaEtapuAsync(
+        Task<(IEnumerable<SurowceDlaEtapuDto>,PaginationMetadata)> GetProduktyDlaEtapuAsync(
             int? idEtapu, int? idProduktu,
             int pageNumber, int pageSize);
-        Task<ProduktyDlaEtapuDto?> GetProduktDlaEtapuAsync(int id);
-        Task AddProduktyDlaEtapuAsync(ProduktyDlaEtapuDto pde);
+        Task<SurowceDlaEtapuDto?> GetProduktDlaEtapuAsync(int id);
+        Task AddProduktyDlaEtapuAsync(SurowceDlaEtapuDto pde);
 
-        void DeleteProduktyDlaEtapu(ProduktyDlaEtapuDto pde);
+        void DeleteProduktyDlaEtapu(SurowceDlaEtapuDto pde);
         Task<bool> SaveChangesAsync();
     }
 }

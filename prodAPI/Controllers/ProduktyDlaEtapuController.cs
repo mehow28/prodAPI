@@ -23,7 +23,7 @@ namespace prodAPI.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<ProduktyDlaEtapuDto>>> GetPdes(
+        public async Task<ActionResult<IEnumerable<SurowceDlaEtapuDto>>> GetPdes(
             int? idProduktu, int? idEtapu,
             int pageNumber=1, int pageSize=10)
         {
@@ -46,9 +46,9 @@ namespace prodAPI.Controllers
             return Ok(foundPde);
         }
         [HttpPost]
-        public async Task<ActionResult<ProduktyDlaEtapuDto>> CreatePde(ProduktyDlaEtapuCreationDto pde)
+        public async Task<ActionResult<SurowceDlaEtapuDto>> CreatePde(ProduktyDlaEtapuCreationDto pde)
         {
-            var newPde = _mapper.Map<ProduktyDlaEtapuDto>(pde);
+            var newPde = _mapper.Map<SurowceDlaEtapuDto>(pde);
             await _pdeRepository.AddProduktyDlaEtapuAsync(newPde);
             await _pdeRepository.SaveChangesAsync();
 

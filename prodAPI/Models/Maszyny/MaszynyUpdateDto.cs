@@ -17,6 +17,8 @@ namespace prodAPI.Models
         [MaxLength(50)]
         public string? Kategoria { get; set; }
 
+        public int? IdAwarii { get; set; }
+
         public DateTime? DataPrzegladu { get; set; }
 
     }

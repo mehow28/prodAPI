@@ -21,7 +21,6 @@ namespace prodAPI.Services
             int pageNumber, int pageSize)
         {
             var collection = _context.Zlecenia as IQueryable<ZleceniumDto>;
-
             if (dataRozpoczecia is not null)
                 collection = collection.Where(c => c.DataRozpoczecia > dataRozpoczecia);
             if (dataZakonczenia is not null)

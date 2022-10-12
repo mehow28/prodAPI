@@ -17,10 +17,15 @@ namespace prodAPI.Services
             return await _context.Maszynies.Where(c=>c.IdMaszyny==idMaszyny).FirstOrDefaultAsync();
         }
         public async Task<(IEnumerable<MaszynyDto>,PaginationMetadata)> GetMaszynyAsync(
-            string? nazwa, string? marka, string? model, string? kategoria,
+            int? idAwarii, string? nazwa, string? marka, string? model, string? kategoria,
             string? searchQuery, int pageNumber, int pageSize)
         {
             var collection = _context.Maszynies as IQueryable<MaszynyDto>;
+
+            if (idAwarii is not null)
+            {
+                collection = collection.Where(c => c.IdAwarii == idAwarii);
+            }
 
             if (!string.IsNullOrWhiteSpace(nazwa))
             {

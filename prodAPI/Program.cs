@@ -33,6 +33,7 @@ builder.Services.AddScoped<ISurowceRepository, SurowceRepository>();
 builder.Services.AddScoped<ISurowceDlaEtapuRepository, SurowceDlaEtapuRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IZleceniumRepository, ZleceniumRepository>();
+builder.Services.AddScoped<IAwariaRepository, AwariaRepository>();
 
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 

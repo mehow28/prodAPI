@@ -25,14 +25,14 @@ namespace prodAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<MaszynyDto>>> GetMaszyny(
-            string? nazwa, string? marka, string? model, string? kategoria,
+            int? idAwarii, string? nazwa, string? marka, string? model, string? kategoria,
             string? searchQuery, int pageNumber=1, int pageSize=10)
         {
             if (pageSize > maxPageSize)
                 pageSize = maxPageSize;
 
             var (maszyny, paginationMetadata) = await _maszynyRepository
-                .GetMaszynyAsync(nazwa, marka, model, kategoria, 
+                .GetMaszynyAsync(idAwarii, nazwa, marka, model, kategoria, 
                 searchQuery, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination",

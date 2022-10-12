@@ -25,6 +25,7 @@ namespace prodAPI.Models
         public virtual DbSet<StatusDto> Statuses { get; set; } = null!;
         public virtual DbSet<ZleceniumDto> Zlecenia { get; set; } = null!;
         public virtual DbSet<SurowceDlaEtapuDto> SurowceDlaEtapus { get; set; } = null!;
+        public virtual DbSet<AwariaDto> Awarias { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -98,8 +99,11 @@ namespace prodAPI.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("id_maszyny");
 
+                entity.Property(e => e.IdAwarii)
+                   .HasColumnName("id_awarii");
+                   
                 entity.Property(e => e.DataPrzegladu)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("data_przegladu");
 
                 entity.Property(e => e.Marka)
@@ -117,6 +121,12 @@ namespace prodAPI.Models
                 entity.Property(e => e.Opis)
                     .HasMaxLength(50)
                     .HasColumnName("opis");
+
+                entity.HasOne(d => d.IdAwariaNavigation)
+                   .WithMany(p => p.Maszyny)
+                   .HasForeignKey(d => d.IdAwarii)
+                   .OnDelete(DeleteBehavior.ClientSetNull)
+                   .HasConstraintName("FK_Maszyny_Awaria");
             });
 
             modelBuilder.Entity<PracownicyDto>(entity =>
@@ -279,16 +289,18 @@ namespace prodAPI.Models
             {
                 entity.HasKey(e => e.IdZlecenia);
 
+                entity.ToTable("Zlecenia");
+
                 entity.Property(e => e.IdZlecenia)
                     .ValueGeneratedOnAdd()
                     .HasColumnName("id_zlecenia");
                 
                 entity.Property(e => e.DataRozpoczecia)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("data_rozpoczecia");
 
                 entity.Property(e => e.DataZakonczenia)
-                    .HasColumnType("date")
+                    .HasColumnType("datetime")
                     .HasColumnName("data_zakonczenia");
 
                 entity.Property(e => e.IdProduktu).HasColumnName("id_produktu");
@@ -300,6 +312,25 @@ namespace prodAPI.Models
                     .HasForeignKey(d => d.IdProduktu)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Zlecenia_Produkty");
+
+            });
+            modelBuilder.Entity<AwariaDto>(entity =>
+            {
+                entity.HasKey(e => e.IdAwarii);
+
+                entity.ToTable("Awaria");
+
+                entity.Property(e => e.IdAwarii)
+                    .ValueGeneratedOnAdd()
+                    .HasColumnName("id_awarii");
+
+                entity.Property(e => e.DataZgloszenia)
+                    .HasColumnType("datetime")
+                    .HasColumnName("data_rozpoczecia");
+
+                entity.Property(e => e.Stan).HasColumnName("stan");
+
+                entity.Property(e => e.Opis).HasColumnName("opis");
 
             });
 

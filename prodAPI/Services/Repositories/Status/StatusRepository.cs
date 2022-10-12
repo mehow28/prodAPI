@@ -27,7 +27,7 @@ namespace prodAPI.Services
 
             if (idPracownika is not null)
                 collection = collection.Where(c => c.IdPracownika == idPracownika);
-
+              
             if (idEtapu is not null)
                 collection = collection.Where(c => c.IdEtapu == idEtapu);
 

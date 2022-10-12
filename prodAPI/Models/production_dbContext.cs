@@ -21,9 +21,10 @@ namespace prodAPI.Models
         public virtual DbSet<MaszynyDto> Maszynies { get; set; } = null!;
         public virtual DbSet<PracownicyDto> Pracownicies { get; set; } = null!;
         public virtual DbSet<ProduktyDto> Produkties { get; set; } = null!;
+        public virtual DbSet<SurowceDto> Surowcies{ get; set; } = null!;
         public virtual DbSet<StatusDto> Statuses { get; set; } = null!;
         public virtual DbSet<ZleceniumDto> Zlecenia { get; set; } = null!;
-        public virtual DbSet<SurowceDlaEtapuDto> SurowwceDlaEtapus { get; set; } = null!;
+        public virtual DbSet<SurowceDlaEtapuDto> SurowceDlaEtapus { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             if (!optionsBuilder.IsConfigured)
@@ -140,7 +141,7 @@ namespace prodAPI.Models
                     .HasMaxLength(50)
                     .HasColumnName("nazwisko");
 
-                entity.Property(e => e.NrTel)
+                entity.Property(e => e.Nrtel)
                     .HasMaxLength(50)
                     .HasColumnName("nr_tel");
             });
@@ -164,7 +165,7 @@ namespace prodAPI.Models
             {
                 entity.HasKey(e => e.IdSurowca);
 
-                entity.ToTable("Produkty");
+                entity.ToTable("Surowce");
 
                 entity.Property(e => e.IdSurowca)
                     .ValueGeneratedOnAdd()
@@ -186,8 +187,32 @@ namespace prodAPI.Models
                     .HasColumnName("id");
 
                 entity.Property(e => e.Stan)
-                    .HasMaxLength(50)
-                    .HasColumnName("nazwa");
+                    .HasColumnName("stan");
+
+                entity.Property(e => e.PotrzebnaIlosc)
+                    .HasColumnName("potrzebna_ilosc");
+                
+                entity.Property(e => e.FaktycznaIlosc)
+                    .HasColumnName("faktyczna_ilosc");
+                
+                entity.Property(e => e.IdEtapu)
+                    .HasColumnName("id_etapu");
+                
+                entity.Property(e => e.IdSurowca)
+                    .HasColumnName("id_surowca");
+
+                entity.HasOne(d => d.IdEtapuNavigation)
+                     .WithMany(p => p.SurowceDlaEtapus)
+                     .HasForeignKey(d => d.IdEtapu)
+                     .OnDelete(DeleteBehavior.ClientSetNull)
+                     .HasConstraintName("FK_SDE_Etapy");
+
+                entity.HasOne(d => d.IdSurowceNavigation)
+                    .WithMany(p => p.SurowceDlaEtapus)
+                    .HasForeignKey(d => d.IdSurowca)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_SDE_Surowce");
+
             });
 
             /*modelBuilder.Entity<ProduktyDto>()
@@ -265,9 +290,13 @@ namespace prodAPI.Models
                     .ValueGeneratedOnAdd()
                     .HasColumnName("id_zlecenia");
 
-                entity.Property(e => e.Data)
+                entity.Property(e => e.DataRozpoczecia)
                     .HasColumnType("date")
-                    .HasColumnName("data");
+                    .HasColumnName("data_rozpoczecia");
+
+                entity.Property(e => e.DataZakonczenia)
+                    .HasColumnType("date")
+                    .HasColumnName("data_zakonczenia");
 
                 entity.Property(e => e.IdProduktu).HasColumnName("id_produktu");
 

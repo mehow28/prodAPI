@@ -3,33 +3,33 @@ using prodAPI.Models;
 
 namespace prodAPI.Services
 {
-    public class ProduktyDlaEtapuRepository : IProduktyDlaEtapuRepository
+    public class SurowceDlaEtapuRepository : ISurowceDlaEtapuRepository
     {
         private production_dbContext _context;
 
-        public ProduktyDlaEtapuRepository(production_dbContext context)
+        public SurowceDlaEtapuRepository(production_dbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
         }
-        public async Task<SurowceDlaEtapuDto?> GetProduktDlaEtapuAsync(int id)
+        public async Task<SurowceDlaEtapuDto?> GetSurowiecDlaEtapuAsync(int id)
         {
-            return await _context.ProduktyDlaEtapus.Where(c => c.Id == id).FirstOrDefaultAsync();
+            return await _context.SurowceDlaEtapus.Where(c => c.Id == id).FirstOrDefaultAsync();
         }
 
-        public async Task<(IEnumerable<SurowceDlaEtapuDto>, PaginationMetadata)> GetProduktyDlaEtapuAsync(
-            int? idEtapu, int? idProduktu,
+        public async Task<(IEnumerable<SurowceDlaEtapuDto>, PaginationMetadata)> GetSurowceDlaEtapuAsync(
+            int? idEtapu, int? idSurowca,
             int pageNumber, int pageSize)
         {
-            var collection = _context.ProduktyDlaEtapus as IQueryable<SurowceDlaEtapuDto>;
+            var collection = _context.SurowceDlaEtapus as IQueryable<SurowceDlaEtapuDto>;
 
             if (idEtapu!=null)
             {
                 collection = collection.Where(c => c.IdEtapu==idEtapu);
             }
 
-            if (idProduktu != null)
+            if (idSurowca != null)
             {
-                collection = collection.Where(c => c.IdProduktu == idProduktu);
+                collection = collection.Where(c => c.IdSurowca == idSurowca);
             }
 
             var totalItemCount = await collection.CountAsync();
@@ -46,17 +46,17 @@ namespace prodAPI.Services
 
         }
 
-        public async Task AddProduktyDlaEtapuAsync(SurowceDlaEtapuDto pde)
+        public async Task AddSurowceDlaEtapuAsync(SurowceDlaEtapuDto pde)
         {
-            _context.ProduktyDlaEtapus.Add(pde);
+            _context.SurowceDlaEtapus.Add(pde);
         }
         public async Task<bool> SaveChangesAsync()
         {
             return (await _context.SaveChangesAsync() >= 0);
         }
-        public void DeleteProduktyDlaEtapu(SurowceDlaEtapuDto pde)
+        public void DeleteSurowceDlaEtapu(SurowceDlaEtapuDto pde)
         {
-            _context.ProduktyDlaEtapus.Remove(pde);
+            _context.SurowceDlaEtapus.Remove(pde);
         }
     }
 }

@@ -8,14 +8,14 @@ using System.Text.Json;
 namespace prodAPI.Controllers
 {
     [ApiController]
-    [Route("api/produktydlaetapu")]
-    public class ProduktyDlaEtapuController : Controller
+    [Route("api/surowcedlaetapu")]
+    public class SurowceDlaEtapuController : Controller
     {
-        private readonly ILogger<ProduktyDlaEtapuController> _logger;
-        private readonly IProduktyDlaEtapuRepository _pdeRepository;
+        private readonly ILogger<SurowceDlaEtapuController> _logger;
+        private readonly ISurowceDlaEtapuRepository _pdeRepository;
         private readonly IMapper _mapper;
         const int maxPageSize = 20;
-        public ProduktyDlaEtapuController(IProduktyDlaEtapuRepository pdeRepository, ILogger<ProduktyDlaEtapuController> logger, IMapper mapper)
+        public SurowceDlaEtapuController(ISurowceDlaEtapuRepository pdeRepository, ILogger<SurowceDlaEtapuController> logger, IMapper mapper)
         {
             _pdeRepository = pdeRepository ?? throw new ArgumentNullException(nameof(pdeRepository));
             _logger = logger ?? throw new ArgumentNullException(nameof(logger));
@@ -24,14 +24,14 @@ namespace prodAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<SurowceDlaEtapuDto>>> GetPdes(
-            int? idProduktu, int? idEtapu,
+            int? idSurowca, int? idEtapu,
             int pageNumber=1, int pageSize=10)
         {
             if (pageSize > maxPageSize)
                 pageSize = maxPageSize;
 
             var (pdes, paginationMetadata) = await _pdeRepository
-                .GetProduktyDlaEtapuAsync(idEtapu, idProduktu, pageNumber, pageSize);
+                .GetSurowceDlaEtapuAsync(idEtapu, idSurowca, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination",
                 JsonSerializer.Serialize(paginationMetadata));
@@ -40,16 +40,16 @@ namespace prodAPI.Controllers
         [HttpGet("{id}", Name = "GetPde")]
         public async Task<ActionResult<EtapyDto>> GetPde(int id)
         {
-            var foundPde = await _pdeRepository.GetProduktDlaEtapuAsync(id);
+            var foundPde = await _pdeRepository.GetSurowiecDlaEtapuAsync(id);
             if (foundPde == null)
                 return NotFound();
             return Ok(foundPde);
         }
         [HttpPost]
-        public async Task<ActionResult<SurowceDlaEtapuDto>> CreatePde(ProduktyDlaEtapuCreationDto pde)
+        public async Task<ActionResult<SurowceDlaEtapuDto>> CreatePde(SurowceDlaEtapuCreationDto pde)
         {
             var newPde = _mapper.Map<SurowceDlaEtapuDto>(pde);
-            await _pdeRepository.AddProduktyDlaEtapuAsync(newPde);
+            await _pdeRepository.AddSurowceDlaEtapuAsync(newPde);
             await _pdeRepository.SaveChangesAsync();
 
             return CreatedAtRoute("GetEtap",
@@ -60,9 +60,9 @@ namespace prodAPI.Controllers
         }
         [HttpPut("{id}")]
         public async Task<ActionResult> UpdatePde(
-            int id, ProduktyDlaEtapuUpdateDto pde)
+            int id, SurowceDlaEtapuUpdateDto pde)
         {
-            var foundPde = await _pdeRepository.GetProduktDlaEtapuAsync(id);
+            var foundPde = await _pdeRepository.GetSurowiecDlaEtapuAsync(id);
             if (foundPde is null)
                 return NotFound();
 
@@ -73,13 +73,13 @@ namespace prodAPI.Controllers
         }
         [HttpPatch("{id}")]
         public async Task<ActionResult> PatchPde(
-            int id, JsonPatchDocument<ProduktyDlaEtapuUpdateDto> patch)
+            int id, JsonPatchDocument<SurowceDlaEtapuUpdateDto> patch)
         {
-            var foundPde = await _pdeRepository.GetProduktDlaEtapuAsync(id);
+            var foundPde = await _pdeRepository.GetSurowiecDlaEtapuAsync(id);
             if (foundPde is null)
                 return NotFound();
 
-            var pdeToPatch = _mapper.Map<ProduktyDlaEtapuUpdateDto>(foundPde);
+            var pdeToPatch = _mapper.Map<SurowceDlaEtapuUpdateDto>(foundPde);
 
             patch.ApplyTo(pdeToPatch, ModelState);
 
@@ -97,11 +97,11 @@ namespace prodAPI.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult> DeletePde(int id)
         {
-            var foundPde = await _pdeRepository.GetProduktDlaEtapuAsync(id);
+            var foundPde = await _pdeRepository.GetSurowiecDlaEtapuAsync(id);
             if (foundPde is null)
                 return NotFound();
 
-            _pdeRepository.DeleteProduktyDlaEtapu(foundPde);
+            _pdeRepository.DeleteSurowceDlaEtapu(foundPde);
             await _pdeRepository.SaveChangesAsync();
             return NoContent();
         }

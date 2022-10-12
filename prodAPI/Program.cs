@@ -29,7 +29,8 @@ builder.Services.AddScoped<IKontumRepository, KontumRepository>();
 builder.Services.AddScoped<IMaszynyRepository, AuthenticationRepository>();
 builder.Services.AddScoped<IPracownicyRepository, PracownicyRepository>();
 builder.Services.AddScoped<IProduktyRepository, ProduktyRepository>();
-builder.Services.AddScoped<IProduktyDlaEtapuRepository, ProduktyDlaEtapuRepository>();
+builder.Services.AddScoped<ISurowceRepository, SurowceRepository>();
+builder.Services.AddScoped<ISurowceDlaEtapuRepository, SurowceDlaEtapuRepository>();
 builder.Services.AddScoped<IStatusRepository, StatusRepository>();
 builder.Services.AddScoped<IZleceniumRepository, ZleceniumRepository>();
 

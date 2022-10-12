@@ -11,7 +11,9 @@ namespace prodAPI.Models
         }
 
         public int IdZlecenia { get; set; }
-        public DateTime? Data { get; set; }
+        public DateTime? DataRozpoczecia { get; set; }
+
+        public DateTime? DataZakonczenia { get; set; }
         public int? IdProduktu { get; set; }
         public int? Ilosc { get; set; }
 

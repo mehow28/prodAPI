@@ -15,6 +15,6 @@ namespace prodAPI.Models
         public int IdSurowca { get; set; }
 
         public virtual EtapyDto IdEtapuNavigation { get; set; } = null!;
-        public virtual SurowceDto IdProduktuNavigation { get; set; } = null!;
+        public virtual SurowceDto IdSurowceNavigation { get; set; } = null!;
     }
 }

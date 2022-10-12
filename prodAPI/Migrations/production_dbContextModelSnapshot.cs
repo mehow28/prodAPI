@@ -39,8 +39,7 @@ namespace prodAPI.Migrations
 
                     b.Property<string>("Opis")
                         .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("opis");
+                        .HasColumnType("nvarchar(max)");
 
                     b.HasKey("IdEtapu")
                         .HasName("PK_etapy");
@@ -96,11 +95,13 @@ namespace prodAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdMaszyny"), 1L, 1);
 
+                    b.Property<DateTime?>("DataPrzegladu")
+                        .HasColumnType("date")
+                        .HasColumnName("data_przegladu");
+
                     b.Property<string>("Kategoria")
                         .IsRequired()
-                        .HasMaxLength(50)
-                        .HasColumnType("nvarchar(50)")
-                        .HasColumnName("kategoria");
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Marka")
                         .IsRequired()
@@ -162,47 +163,11 @@ namespace prodAPI.Migrations
                         .IsRequired()
                         .HasMaxLength(50)
                         .HasColumnType("nvarchar(50)")
-                        .HasColumnName("nrtel");
+                        .HasColumnName("nr_tel");
 
                     b.HasKey("IdPracownika");
 
                     b.ToTable("Pracownicy", (string)null);
-                });
-
-            modelBuilder.Entity("prodAPI.Models.ProduktyDlaEtapuDto", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("int")
-                        .HasColumnName("id");
-
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
-
-                    b.Property<int?>("FaktycznaIlosc")
-                        .HasColumnType("int");
-
-                    b.Property<int>("IdEtapu")
-                        .HasColumnType("int")
-                        .HasColumnName("id_etapu");
-
-                    b.Property<int>("IdProduktu")
-                        .HasColumnType("int")
-                        .HasColumnName("id_produktu");
-
-                    b.Property<int>("PotrzebnaIlosc")
-                        .HasColumnType("int");
-
-                    b.Property<bool>("Stan")
-                        .HasColumnType("bit")
-                        .HasColumnName("stan");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex(new[] { "IdProduktu" }, "FK_Produkty_Dla_Etapu_2");
-
-                    b.HasIndex(new[] { "IdEtapu" }, "FK_Produkty_Dla_Etapu_3");
-
-                    b.ToTable("Produkty_Dla_Etapu", (string)null);
                 });
 
             modelBuilder.Entity("prodAPI.Models.ProduktyDto", b =>
@@ -234,19 +199,15 @@ namespace prodAPI.Migrations
 
                     SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdStatusu"), 1L, 1);
 
-                    b.Property<DateTime?>("DataRozpoczecia")
-                        .HasColumnType("date")
-                        .HasColumnName("data_rozpoczecia");
-
-                    b.Property<DateTime?>("DataZakonczenia")
-                        .HasColumnType("date")
-                        .HasColumnName("data_zakonczenia");
+                    b.Property<int>("CzasTrwania")
+                        .HasColumnType("int")
+                        .HasColumnName("czas_trwania");
 
                     b.Property<int>("IdEtapu")
                         .HasColumnType("int")
                         .HasColumnName("id_etapu");
 
-                    b.Property<int>("IdMaszyny")
+                    b.Property<int?>("IdMaszyny")
                         .HasColumnType("int")
                         .HasColumnName("id_maszyny");
 
@@ -262,16 +223,11 @@ namespace prodAPI.Migrations
                         .HasColumnType("int")
                         .HasColumnName("id_zlecenia");
 
-                    b.Property<string>("Notatki")
-                        .HasColumnType("text")
-                        .HasColumnName("notatki");
-
                     b.Property<bool>("Stan")
                         .HasColumnType("bit")
                         .HasColumnName("stan");
 
-                    b.HasKey("IdStatusu")
-                        .HasName("PK_Status_1");
+                    b.HasKey("IdStatusu");
 
                     b.HasIndex("IdEtapu");
 
@@ -284,6 +240,64 @@ namespace prodAPI.Migrations
                     b.HasIndex("IdZlecenia");
 
                     b.ToTable("Status", (string)null);
+                });
+
+            modelBuilder.Entity("prodAPI.Models.SurowceDlaEtapuDto", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<int?>("FaktycznaIlosc")
+                        .HasColumnType("int")
+                        .HasColumnName("faktyczna_ilosc");
+
+                    b.Property<int>("IdEtapu")
+                        .HasColumnType("int")
+                        .HasColumnName("id_etapu");
+
+                    b.Property<int>("IdSurowca")
+                        .HasColumnType("int")
+                        .HasColumnName("id_surowca");
+
+                    b.Property<int>("PotrzebnaIlosc")
+                        .HasColumnType("int")
+                        .HasColumnName("potrzebna_ilosc");
+
+                    b.Property<bool>("Stan")
+                        .HasColumnType("bit")
+                        .HasColumnName("stan");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("IdEtapu");
+
+                    b.HasIndex("IdSurowca");
+
+                    b.ToTable("SurowceDlaEtapu", (string)null);
+                });
+
+            modelBuilder.Entity("prodAPI.Models.SurowceDto", b =>
+                {
+                    b.Property<int>("IdSurowca")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasColumnName("id_surowca");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("IdSurowca"), 1L, 1);
+
+                    b.Property<string>("Nazwa")
+                        .IsRequired()
+                        .HasMaxLength(50)
+                        .HasColumnType("nvarchar(50)")
+                        .HasColumnName("nazwa");
+
+                    b.HasKey("IdSurowca");
+
+                    b.ToTable("Surowce", (string)null);
                 });
 
             modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>
@@ -303,20 +317,20 @@ namespace prodAPI.Migrations
                         .HasColumnType("date")
                         .HasColumnName("data_zakonczenia");
 
-                    b.Property<int>("Ilosc")
+                    b.Property<int?>("IdProduktu")
+                        .HasColumnType("int")
+                        .HasColumnName("id_produktu");
+
+                    b.Property<int?>("IdProduktuNavigationIdProduktu")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("Ilosc")
                         .HasColumnType("int")
                         .HasColumnName("ilosc");
 
-                    b.Property<string>("Opis")
-                        .IsRequired()
-                        .HasColumnType("text")
-                        .HasColumnName("opis");
-
-                    b.Property<bool>("Stan")
-                        .HasColumnType("bit")
-                        .HasColumnName("stan");
-
                     b.HasKey("IdZlecenia");
+
+                    b.HasIndex("IdProduktuNavigationIdProduktu");
 
                     b.ToTable("Zlecenia");
                 });
@@ -332,25 +346,6 @@ namespace prodAPI.Migrations
                     b.Navigation("IdPracownikaNavigation");
                 });
 
-            modelBuilder.Entity("prodAPI.Models.ProduktyDlaEtapuDto", b =>
-                {
-                    b.HasOne("prodAPI.Models.EtapyDto", "IdEtapuNavigation")
-                        .WithMany("ProduktyDlaEtapus")
-                        .HasForeignKey("IdEtapu")
-                        .IsRequired()
-                        .HasConstraintName("FK_Produkty_Dla_Etapu_9");
-
-                    b.HasOne("prodAPI.Models.ProduktyDto", "IdProduktuNavigation")
-                        .WithMany("ProduktyDlaEtapus")
-                        .HasForeignKey("IdProduktu")
-                        .IsRequired()
-                        .HasConstraintName("FK_Produkty_Dla_Etapu_8_1");
-
-                    b.Navigation("IdEtapuNavigation");
-
-                    b.Navigation("IdProduktuNavigation");
-                });
-
             modelBuilder.Entity("prodAPI.Models.StatusDto", b =>
                 {
                     b.HasOne("prodAPI.Models.EtapyDto", "IdEtapuNavigation")
@@ -362,7 +357,6 @@ namespace prodAPI.Migrations
                     b.HasOne("prodAPI.Models.MaszynyDto", "IdMaszynyNavigation")
                         .WithMany("Statuses")
                         .HasForeignKey("IdMaszyny")
-                        .IsRequired()
                         .HasConstraintName("FK_Status_Maszyny");
 
                     b.HasOne("prodAPI.Models.PracownicyDto", "IdPracownikaNavigation")
@@ -394,11 +388,39 @@ namespace prodAPI.Migrations
                     b.Navigation("IdZleceniaNavigation");
                 });
 
+            modelBuilder.Entity("prodAPI.Models.SurowceDlaEtapuDto", b =>
+                {
+                    b.HasOne("prodAPI.Models.EtapyDto", "IdEtapuNavigation")
+                        .WithMany("SurowceDlaEtapus")
+                        .HasForeignKey("IdEtapu")
+                        .IsRequired()
+                        .HasConstraintName("FK_SDE_Etapy");
+
+                    b.HasOne("prodAPI.Models.SurowceDto", "IdSurowceNavigation")
+                        .WithMany("SurowceDlaEtapus")
+                        .HasForeignKey("IdSurowca")
+                        .IsRequired()
+                        .HasConstraintName("FK_SDE_Surowce");
+
+                    b.Navigation("IdEtapuNavigation");
+
+                    b.Navigation("IdSurowceNavigation");
+                });
+
+            modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>
+                {
+                    b.HasOne("prodAPI.Models.ProduktyDto", "IdProduktuNavigation")
+                        .WithMany()
+                        .HasForeignKey("IdProduktuNavigationIdProduktu");
+
+                    b.Navigation("IdProduktuNavigation");
+                });
+
             modelBuilder.Entity("prodAPI.Models.EtapyDto", b =>
                 {
-                    b.Navigation("ProduktyDlaEtapus");
-
                     b.Navigation("Statuses");
+
+                    b.Navigation("SurowceDlaEtapus");
                 });
 
             modelBuilder.Entity("prodAPI.Models.MaszynyDto", b =>
@@ -415,9 +437,12 @@ namespace prodAPI.Migrations
 
             modelBuilder.Entity("prodAPI.Models.ProduktyDto", b =>
                 {
-                    b.Navigation("ProduktyDlaEtapus");
-
                     b.Navigation("Statuses");
+                });
+
+            modelBuilder.Entity("prodAPI.Models.SurowceDto", b =>
+                {
+                    b.Navigation("SurowceDlaEtapus");
                 });
 
             modelBuilder.Entity("prodAPI.Models.ZleceniumDto", b =>

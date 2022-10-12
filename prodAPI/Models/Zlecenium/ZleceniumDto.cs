@@ -14,8 +14,9 @@ namespace prodAPI.Models
         public DateTime? DataRozpoczecia { get; set; }
 
         public DateTime? DataZakonczenia { get; set; }
-        public int? IdProduktu { get; set; }
-        public int? Ilosc { get; set; }
+        public int IdProduktu { get; set; }
+        public int Ilosc { get; set; }
+        public string? Opis { get; set; }
 
         public virtual ProduktyDto? IdProduktuNavigation { get; set; }
         public virtual ICollection<StatusDto> Statuses { get; set; }

@@ -246,8 +246,6 @@ namespace prodAPI.Models
 
                 entity.Property(e => e.IdPracownika).HasColumnName("id_pracownika");
 
-                entity.Property(e => e.IdProduktu).HasColumnName("id_produktu");
-
                 entity.Property(e => e.IdZlecenia).HasColumnName("id_zlecenia");
 
                 entity.Property(e => e.Stan).HasColumnName("stan");
@@ -269,12 +267,7 @@ namespace prodAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Status_Pracownicy");
 
-                entity.HasOne(d => d.IdProduktuNavigation)
-                    .WithMany(p => p.Statuses)
-                    .HasForeignKey(d => d.IdProduktu)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_Status_Produkty");
-
+              
                 entity.HasOne(d => d.IdZleceniaNavigation)
                     .WithMany(p => p.Statuses)
                     .HasForeignKey(d => d.IdZlecenia)
@@ -289,7 +282,7 @@ namespace prodAPI.Models
                 entity.Property(e => e.IdZlecenia)
                     .ValueGeneratedOnAdd()
                     .HasColumnName("id_zlecenia");
-
+                
                 entity.Property(e => e.DataRozpoczecia)
                     .HasColumnType("date")
                     .HasColumnName("data_rozpoczecia");
@@ -302,7 +295,12 @@ namespace prodAPI.Models
 
                 entity.Property(e => e.Ilosc).HasColumnName("ilosc");
 
-                
+                entity.HasOne(d => d.IdProduktuNavigation)
+                    .WithMany(p => p.Zlecenia)
+                    .HasForeignKey(d => d.IdProduktu)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Zlecenia_Produkty");
+
             });
 
             OnModelCreatingPartial(modelBuilder);

@@ -7,7 +7,7 @@ namespace prodAPI.Services
     public interface IStatusRepository
     {
         Task<(IEnumerable<StatusDto>, PaginationMetadata)> GetStatusAsync(
-            int? idProduktu, int? idZlecenia, int? idPracownika, int? idEtapu, 
+            int? idZlecenia, int? idPracownika, int? idEtapu, 
             bool? status, int pageNumber, int pageSize);
         Task<StatusDto?> GetStatusAsync(int idStatusu);
         Task AddStatusAsync(StatusDto status);

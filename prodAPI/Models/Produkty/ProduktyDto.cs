@@ -9,12 +9,12 @@ namespace prodAPI.Models
     {
         public ProduktyDto()
         {
-            Statuses = new HashSet<StatusDto>();
+            Zlecenia = new HashSet<ZleceniumDto>();
         }
        
         public int IdProduktu { get; set; }
         public string Nazwa { get; set; } = null!;
 
-        public virtual ICollection<StatusDto> Statuses { get; set; }
+        public virtual ICollection<ZleceniumDto> Zlecenia { get; set; }
     }
 }

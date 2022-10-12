@@ -7,7 +7,7 @@ namespace prodAPI.Services
     public interface IZleceniumRepository
     {
         Task<(IEnumerable<ZleceniumDto>, PaginationMetadata)> GetZleceniumAsync(
-            DateTime? dataRozpoczecia, DateTime? dataZakonczenia, 
+            DateTime? dataRozpoczecia, DateTime? dataZakonczenia, int? idProduktu,
             int pageNumber, int pageSize);
         Task<ZleceniumDto?> GetZleceniumAsync(int idZleceniumu);
         Task AddZleceniumAsync(ZleceniumDto Zlecenium);

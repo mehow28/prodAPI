@@ -17,7 +17,7 @@ namespace prodAPI.Services
             return await _context.Zlecenia.Where(c=>c.IdZlecenia==idZlecenia).FirstOrDefaultAsync();
         }
         public async Task<(IEnumerable<ZleceniumDto>,PaginationMetadata)> GetZleceniumAsync(
-            DateTime? dataRozpoczecia, DateTime? dataZakonczenia,
+            DateTime? dataRozpoczecia, DateTime? dataZakonczenia, int? idProduktu,
             int pageNumber, int pageSize)
         {
             var collection = _context.Zlecenia as IQueryable<ZleceniumDto>;
@@ -26,6 +26,8 @@ namespace prodAPI.Services
                 collection = collection.Where(c => c.DataRozpoczecia > dataRozpoczecia);
             if (dataZakonczenia is not null)
                 collection = collection.Where(c => c.DataZakonczenia > dataZakonczenia);
+            if (idProduktu is not null)
+                collection = collection.Where(c => c.IdProduktu == idProduktu);
 
             var totalItemCount = await collection.CountAsync();
             var paginationMetadata = new PaginationMetadata(

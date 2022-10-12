@@ -17,13 +17,10 @@ namespace prodAPI.Services
             return await _context.Statuses.Where(c=>c.IdStatusu==idStatusu).FirstOrDefaultAsync();
         }
         public async Task<(IEnumerable<StatusDto>, PaginationMetadata)> GetStatusAsync(
-            int? idProduktu, int? idZlecenia, int? idPracownika, int? idEtapu,
+            int? idZlecenia, int? idPracownika, int? idEtapu,
             bool? status, int pageNumber, int pageSize)
         {
             var collection = _context.Statuses as IQueryable<StatusDto>;
-
-            if (idProduktu is not null)
-                collection = collection.Where(c => c.IdProduktu == idProduktu);
 
             if (idZlecenia is not null)
                 collection = collection.Where(c => c.IdZlecenia == idZlecenia);

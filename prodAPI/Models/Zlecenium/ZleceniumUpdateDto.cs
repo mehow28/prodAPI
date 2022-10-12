@@ -10,7 +10,8 @@ namespace prodAPI.Models
         public DateTime? DataRozpoczecia { get; set; }
         public int? Ilosc { get; set; }
         public bool? Stan { get; set; }
+        public int? IdProduktu { get; set; }
         public DateTime? DataZakonczenia { get; set; }
-        public string Opis { get; set; } = null!;
+        public string? Opis { get; set; } = null!;
     }
 }

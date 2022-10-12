@@ -25,14 +25,14 @@ namespace prodAPI.Controllers
 
         [HttpGet]
         public async Task<ActionResult<IEnumerable<StatusDto>>> GetStatus(
-            int? idProduktu, int? idZlecenia, int? idPracownika, int? idEtapu,
+            int? idZlecenia, int? idPracownika, int? idEtapu,
             bool? stan, int pageNumber = 1, int pageSize = 10)
         {
             if (pageSize > maxPageSize)
                 pageSize = maxPageSize;
 
             var (status, paginationMetadata) = await _statusRepository
-                .GetStatusAsync(idProduktu, idZlecenia, idPracownika,
+                .GetStatusAsync(idZlecenia, idPracownika,
                 idEtapu, stan, pageNumber, pageSize);
 
             Response.Headers.Add("X-Pagination",

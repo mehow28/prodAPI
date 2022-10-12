@@ -8,8 +8,7 @@ namespace prodAPI.Models
     public partial class StatusCreationDto
     {
         public bool Stan { get; set; }
-        [ForeignKey("IdProduktu")]
-        public int IdProduktu { get; set; }
+
 
         [ForeignKey("IdZlecenia")]
         public int IdZlecenia { get; set; }

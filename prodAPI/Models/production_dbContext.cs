@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
+using prodAPI.Models.StrukturyWyrobu;
 
 namespace prodAPI.Models
 {
@@ -24,6 +25,7 @@ namespace prodAPI.Models
         public virtual DbSet<SurowceDto> Surowcies{ get; set; } = null!;
         public virtual DbSet<StatusDto> Statuses { get; set; } = null!;
         public virtual DbSet<ZleceniumDto> Zlecenia { get; set; } = null!;
+        public virtual DbSet<StrukturyWyrobuDto> StrukturyWyrobus { get; set; } = null!;
         public virtual DbSet<SurowceDlaEtapuDto> SurowceDlaEtapus { get; set; } = null!;
         public virtual DbSet<AwariaDto> Awarias { get; set; } = null!;
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
@@ -223,6 +225,23 @@ namespace prodAPI.Models
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_SDE_Surowce");
 
+            });
+
+            modelBuilder.Entity<StrukturyWyrobuDto>(entity =>
+            {
+                entity.ToTable("StrukturyWyrobu");
+
+                entity.HasIndex(e => e.IdEtapu, "IX_StrukturyWyrobu_IdEtapuNavigationIdEtapu");
+
+                entity.HasIndex(e => e.IdProduktu, "IX_StrukturyWyrobu_IdProduktuNavigationIdProduktu");
+
+                entity.HasOne(d => d.IdEtapuNavigation)
+                    .WithMany(p => p.StrukturyWyrobus)
+                    .HasForeignKey(d => d.IdEtapu);
+
+                entity.HasOne(d => d.IdProduktuNavigation)
+                    .WithMany(p => p.StrukturyWyrobus)
+                    .HasForeignKey(d => d.IdProduktu);
             });
 
             /*modelBuilder.Entity<ProduktyDto>()

@@ -10,5 +10,8 @@ namespace prodAPI.Models
         public string Nazwa { get; set; } = null!;
         [MaxLength(50)]
         public string Opis { get; set; } = null!;
+
+        public int Czas { get; set; }
+
     }
 }

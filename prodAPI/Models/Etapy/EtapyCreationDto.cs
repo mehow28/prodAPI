@@ -12,5 +12,8 @@ namespace prodAPI.Models
         [Required]
         [MaxLength(50)]
         public string Opis { get; set; } = null!;
+
+        public int Czas { get; set; }
+
     }
 }

@@ -1,6 +1,6 @@
 ﻿using Azure;
 
-namespace prodAPI.Models.StrukturyWyrobu
+namespace prodAPI.Models
 {
     public class StrukturyWyrobuDto
     {

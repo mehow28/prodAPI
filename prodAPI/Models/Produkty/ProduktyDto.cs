@@ -9,12 +9,14 @@ namespace prodAPI.Models
     {
         public ProduktyDto()
         {
+            StrukturyWyrobus = new HashSet<StrukturyWyrobuDto>();
             Zlecenia = new HashSet<ZleceniumDto>();
         }
        
         public int IdProduktu { get; set; }
         public string Nazwa { get; set; } = null!;
 
+        public virtual ICollection<StrukturyWyrobuDto> StrukturyWyrobus { get; set; }
         public virtual ICollection<ZleceniumDto> Zlecenia { get; set; }
     }
 }

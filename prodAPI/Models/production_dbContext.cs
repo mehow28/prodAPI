@@ -53,7 +53,10 @@ namespace prodAPI.Models
                 entity.Property(e => e.Nazwa)
                     .HasMaxLength(50)
                     .HasColumnName("nazwa");
-/*
+
+                entity.Property(e => e.Czas).HasColumnName("czas");
+
+                /*
                 entity.HasOne(d => d.IdProduktuNavigation)
                     .WithMany(p => p.Etapies)
                     .HasForeignKey(d => d.IdProduktu)

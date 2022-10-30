@@ -7,10 +7,11 @@ namespace prodAPI.Services
     public class StatusRepository : IStatusRepository
     {
         private production_dbContext _context;
-
+        
         public StatusRepository(production_dbContext context)
         {
             _context = context ?? throw new ArgumentNullException(nameof(context));
+            
         }
         public async Task<StatusDto?> GetStatusAsync(int idStatusu)
         {
@@ -20,6 +21,7 @@ namespace prodAPI.Services
             int? idZlecenia, int? idPracownika, int? idEtapu,
             bool? status, int pageNumber, int pageSize)
         {
+            
             var collection = _context.Statuses as IQueryable<StatusDto>;
 
             if (idZlecenia is not null)

@@ -14,20 +14,24 @@ namespace prodAPI.Services
         }
 
         public async Task<(IEnumerable<ZleceniumDto>, PaginationMetadata)> GetZleceniaByPracownikAsync(
-            int idPracownika, int pageNumber, int pageSize)
+            int idPracownika)
         {
+            int pageNumber = 1;
+            int pageSize = 20;
+            Console.WriteLine("idPracownika: ", idPracownika);
             var collectionStatuses = _context.Statuses as IQueryable<StatusDto>;
             var collectionZlecenia = _context.Zlecenia as IQueryable<ZleceniumDto>;
+
             collectionStatuses = collectionStatuses.Where(c => c.IdPracownika == idPracownika);
-
-            List<int> idZlecenias = new List<int>();
-
+            List<int> ids = new List<int>();
+            
             foreach(var col in collectionStatuses)
             {
-                idZlecenias.Append(col.IdZlecenia);
+                Console.WriteLine(col.IdZlecenia);
+                ids.Add(col.IdZlecenia);
             }
-            collectionZlecenia = collectionZlecenia.Where(c => idZlecenias.Contains(c.IdZlecenia));
-
+            collectionZlecenia = collectionZlecenia.Where(c=>ids.Contains(c.IdZlecenia));
+          
             var totalItemCount = await collectionZlecenia.CountAsync();
             var paginationMetadata = new PaginationMetadata(
                 totalItemCount, pageSize, pageNumber);

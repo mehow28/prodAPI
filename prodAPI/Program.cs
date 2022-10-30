@@ -5,6 +5,8 @@ using Serilog;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 using Azure.Identity;
+using Newtonsoft.Json.Serialization;
+using Newtonsoft.Json;
 
 Log.Logger = new LoggerConfiguration()
     .MinimumLevel.Debug()
@@ -17,12 +19,17 @@ var builder = WebApplication.CreateBuilder(args);
 //builder.Configuration.AddAzureKeyVault(keyVaultEndpoint, new DefaultAzureCredential());
 
 // Add services to the container.
-builder.Services.AddControllers().AddNewtonsoftJson();
+builder.Services.AddControllers().AddNewtonsoftJson(options =>
+{
+    // Use the default property (Pascal) casing
+    options.SerializerSettings.ContractResolver = new CamelCasePropertyNamesContractResolver();
+    options.SerializerSettings.ReferenceLoopHandling = ReferenceLoopHandling.Ignore;
+});
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 var connectionString = builder.Configuration.GetConnectionString("Conn");
-builder.Services.AddDbContext<production_dbContext>(x => x.UseSqlServer(connectionString));
+builder.Services.AddDbContext<production_dbContext>(x => x.UseLazyLoadingProxies().UseSqlServer(connectionString));
 
 builder.Services.AddScoped<IEtapyRepository, EtapyRepository>();
 builder.Services.AddScoped<IKontumRepository, KontumRepository>();

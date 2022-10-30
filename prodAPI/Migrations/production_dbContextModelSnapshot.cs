@@ -114,7 +114,7 @@ namespace prodAPI.Migrations
 
                     b.HasIndex("IdPracownika");
 
-                    b.ToTable("Konties");
+                    b.ToTable("Konties", (string)null);
                 });
 
             modelBuilder.Entity("prodAPI.Models.MaszynyDto", b =>

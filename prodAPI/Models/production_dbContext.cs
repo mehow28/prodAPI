@@ -124,7 +124,7 @@ namespace prodAPI.Models
                     .HasColumnName("nazwa");
 
                 entity.Property(e => e.Opis)
-                    .HasMaxLength(50)
+                    .HasMaxLength(500)
                     .HasColumnName("opis");
 
                 entity.HasOne(d => d.IdAwariaNavigation)

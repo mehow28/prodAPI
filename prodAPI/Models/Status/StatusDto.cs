@@ -12,7 +12,7 @@ namespace prodAPI.Models
         public int IdEtapu { get; set; }
         public bool Stan { get; set; }
         public int CzasTrwania { get; set; }
-
+        public string? Notatki { get; set; }
         public virtual EtapyDto IdEtapuNavigation { get; set; } = null!;
         public virtual MaszynyDto? IdMaszynyNavigation { get; set; }
         public virtual PracownicyDto IdPracownikaNavigation { get; set; } = null!;

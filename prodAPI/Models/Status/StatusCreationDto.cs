@@ -21,8 +21,7 @@ namespace prodAPI.Models
         public int IdEtapu { get; set; }
         [ForeignKey("IdMaszyny")]
         public int? IdMaszyny { get; set; }
-        public DateTime? DataRozpoczecia { get; set; }
-        public DateTime? DataZakonczenia { get; set; }
+        public int CzasTrwania { get; set; }
         public string Notatki { get; set; } = null!;
     }
 }
